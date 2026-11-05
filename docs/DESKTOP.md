@@ -32,7 +32,9 @@ System fonts are used rather than embedded font files. Install Inter and JetBrai
 
 ## Optional top-bar layout
 
-The included **Nightshift Panel Layout** extension places Wi-Fi, sound, and battery controls at the far left and the Activities/workspace indicator at the far right. It keeps GNOME's original controls and menus, leaves the date/time in the center, and adds no timers or keyboard bindings. Disabling it restores the original positions.
+The included **Nightshift Panel Layout** extension places Wi-Fi, sound, and battery controls at the far left and the Activities/workspace indicator at the far right. Hover over the workspace indicator briefly to open the workspace overview; clicking still works. The 180 ms hover delay cancels when you leave or press the control, and hovering an already open overview does not close it.
+
+It keeps GNOME's original controls and menus, leaves the date/time in the center, and adds no background polling or keyboard bindings. Disabling it restores the original positions and removes the hover handler.
 
 This is separate from the widget installer and currently targets **GNOME Shell 46**. From the repository checkout:
 
