@@ -30,6 +30,33 @@ System fonts are used rather than embedded font files. Install Inter and JetBrai
 - `nightshift-home --theme`, `--manage`, `--arrange`, `--layouts`, `--launcher`, `--calendar`, and `--project` open the corresponding controls.
 - Reduce motion in Home settings to suppress widget transitions. Existing Super+D and Super+Arrow bindings are retained.
 
+## Optional top-bar layout
+
+The included **Nightshift Panel Layout** extension places Wi-Fi, sound, and battery controls at the far left and the Activities/workspace indicator at the far right. It keeps GNOME's original controls and menus, leaves the date/time in the center, and adds no timers or keyboard bindings. Disabling it restores the original positions.
+
+This is separate from the widget installer and currently targets **GNOME Shell 46**. From the repository checkout:
+
+```sh
+mkdir -p ~/.local/share/gnome-shell/extensions
+cp -R extensions/nightshift-panel@nightshift.local ~/.local/share/gnome-shell/extensions/
+```
+
+On X11, press **Alt+F2**, enter `restart`, and press Enter to load the new extension. Then enable it:
+
+```sh
+gnome-extensions enable nightshift-panel@nightshift.local
+```
+
+If GNOME's master Extensions switch is off, review the enabled extension list before switching it on: doing so resumes all extensions still marked enabled. Other panel-layout extensions may compete for these same controls. Use one layout controller at a time.
+
+To undo the placement:
+
+```sh
+gnome-extensions disable nightshift-panel@nightshift.local
+```
+
+Disable it before removing its directory. The main widget uninstaller does not manage this optional extension.
+
 ## Optional workspace shortcuts
 
 An explicit helper can name three workspaces Coding, Research, and Personal, add Super+Alt+1/2/3, and bind Super+K to Quick Launch. Review these bindings against your existing shortcuts before running it. This is separate from the installer:

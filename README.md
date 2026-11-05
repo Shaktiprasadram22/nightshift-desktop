@@ -51,7 +51,7 @@ cd nightshift-desktop
 
 The installer is per-user and does not require sudo. It does not download code, install extensions, enable GNOME’s extension master switch, replace your shell configuration, or change **Super+D / Super+Arrow** bindings. Omit `--desktop` to install only the widget application; omit `--autostart` to start it manually.
 
-Shell styling requires a compatible **User Themes** extension that you have enabled. The bottom dock settings apply when **Dash to Dock** is installed. Blur needs a compatible **Blur my Shell** extension; it is not a CSS feature. See [desktop compatibility and finishing touches](docs/DESKTOP.md). Log out and back in if GNOME does not reload the Shell theme.
+Shell styling requires a compatible **User Themes** extension that you have enabled. The bottom dock settings apply when **Dash to Dock** is installed. Blur needs a compatible **Blur my Shell** extension; it is not a CSS feature. An optional **Nightshift Panel Layout** extension moves system controls left and the workspace indicator right. See [desktop compatibility and finishing touches](docs/DESKTOP.md). Log out and back in if GNOME does not reload the Shell theme.
 
 Open **Nightshift Home** from the application drawer to choose widgets. Use **Arrange desktop** to move/resize them and **RGB Studio** to change the palette. The `Aurora glass` preset matches the preview; `Midnight cyan`, `Cyber violet`, `Aurora mint`, `Ember`, and `Arctic` are also included.
 
@@ -97,6 +97,7 @@ Re-running installation preserves an existing widget configuration and layout. I
 ```sh
 npm ci --ignore-scripts --prefix src/nightshift_home
 /usr/bin/python3 tools/test.py
+node --test tests/panel_layout.test.mjs
 ```
 
 Tests use a temporary `NIGHTSHIFT_HOME` and an in-memory settings backend. They cover data parsing, layout geometry, stores, media controls, theme transactions, portable installation, and rollback without connecting accounts or changing your desktop.

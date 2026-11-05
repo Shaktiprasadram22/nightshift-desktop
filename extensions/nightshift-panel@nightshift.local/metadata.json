@@ -1,0 +1,8 @@
+{
+  "uuid": "nightshift-panel@nightshift.local",
+  "name": "Nightshift Panel Layout",
+  "description": "Place Wi-Fi, sound and battery controls on the left, and the workspace indicator on the right.",
+  "shell-version": ["46"],
+  "url": "https://github.com/Shaktiprasadram22/nightshift-desktop",
+  "version": 1
+}

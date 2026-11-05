@@ -18,6 +18,8 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund --prefix src/nightshift_home
       - name: Offline unit and installer tests
         run: /usr/bin/python3 tools/test.py
+      - name: Panel placement and rollback checks
+        run: node --test tests/panel_layout.test.mjs
       - name: Render GTK demo and check allocations
         run: xvfb-run -a -s '-screen 0 1920x1080x24' dbus-run-session -- /usr/bin/python3 tools/render_demo.py --output /tmp/nightshift-demo.png
       - name: Verify learning search and document save interactions
