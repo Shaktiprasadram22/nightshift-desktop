@@ -156,6 +156,19 @@ class LearningFeedTests(unittest.TestCase):
         self.assertEqual(parsed.netloc,'www.google.com')
         self.assertEqual(parse_qs(parsed.query)['q'],['AI '+query])
 
+    def test_nvidia_guides_remain_findable_with_a_full_article_cache(self):
+        template = feed.parse_feed(RSS.replace(b'huggingface.co', b'developer.nvidia.com'), feed.SOURCES['nvidia'], NOW)[0]
+        articles = [{**template, 'url': f'https://developer.nvidia.com/blog/example-{i}/', 'published': NOW - i} for i in range(feed.MAX_ITEMS)]
+        matches = feed.select_items({'nvidia': {'items': articles}}, query='NVIDIA', now=NOW)
+        guides = [item for item in matches if item['kind'] == 'guide']
+        self.assertEqual(len(guides), 3)
+        self.assertEqual(matches[:3], guides)
+        self.assertTrue(any(item['kind'] == 'article' for item in matches))
+        self.assertTrue(all(item['published'] is None and item['source'].startswith('NVIDIA') for item in guides))
+        for item in guides:
+            self.assertEqual(feed.canonical_url(item['url']), item['url'])
+            self.assertTrue(append_note('', item)[1])
+
 
 class LearningSaveTests(unittest.TestCase):
     def setUp(self):self.item=copy.deepcopy(feed.GUIDES[0])

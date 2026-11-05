@@ -32,7 +32,7 @@ SOURCES = {
     'google_ai': {'name': 'Google AI', 'url': 'https://blog.google/innovation-and-ai/technology/ai/rss/', 'host': 'blog.google'},
     'google_developers': {'name': 'Google Developers', 'url': 'https://developers.googleblog.com/', 'host': 'developers.googleblog.com', 'format': 'google_developers'},
 }
-HOSTS = {value['host'] for value in SOURCES.values()} | {'docs.vllm.ai'}
+HOSTS = {value['host'] for value in SOURCES.values()} | {'docs.vllm.ai', 'nvidia.github.io', 'docs.nvidia.com', 'learn.nvidia.com'}
 TOPICS = {
     'cost': r'cost|cach|quantiz|distill|compress|efficien|spars|prun|small(?:er)? model|token budget|routing',
     'latency': r'latency|inference|throughput|speculative|batch|prefill|decod|serving|streaming|speed|accelerat|cach',
@@ -44,6 +44,9 @@ GUIDES = [
     {'title': 'Choose an inference optimization', 'summary': 'A practical reference for quantization, caching, and efficient model execution.', 'url': 'https://huggingface.co/docs/transformers/en/optimization_overview', 'source': 'Hugging Face', 'topics': ['cost', 'latency'], 'action': 'Benchmark one inference optimization against the same prompts; record latency, memory, and answer quality.'},
     {'title': 'Build and evaluate an AI agent', 'summary': 'Work through tools, agent workflows, and hands-on exercises at your own pace.', 'url': 'https://huggingface.co/learn/agents-course/en/unit0/introduction', 'source': 'Hugging Face', 'topics': ['build'], 'action': 'Build one small agent workflow and test it on a fixed set of tasks before expanding it.'},
     {'title': 'Turn an AI recipe into a small experiment', 'summary': 'Runnable notebooks and examples from the open-source AI cookbook.', 'url': 'https://huggingface.co/learn/cookbook/index', 'source': 'Hugging Face', 'topics': ['build'], 'action': 'Choose one cookbook example, run it locally, and write down what would change in your chatbot.'},
+    {'title': 'Tune TensorRT-LLM inference performance', 'summary': 'NVIDIA’s guide to benchmarking, batch sizes, model sharding, and quantization for LLM inference.', 'url': 'https://nvidia.github.io/TensorRT-LLM/performance/performance-tuning-guide/', 'source': 'NVIDIA · TensorRT-LLM', 'topics': ['cost', 'latency'], 'action': 'Benchmark your model with one tuning change at a time; compare latency, throughput, and GPU memory.'},
+    {'title': 'Optimize Triton inference serving', 'summary': 'Learn the latency and throughput tradeoffs of dynamic batching and multiple model instances.', 'url': 'https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/user_guide/optimization.html', 'source': 'NVIDIA · Triton', 'topics': ['cost', 'latency', 'build'], 'action': 'Compare your inference server with and without dynamic batching; measure p95 latency and throughput at the same load.'},
+    {'title': 'Explore NVIDIA AI and LLM training', 'summary': 'Official self-paced courses in generative AI, deep learning, and accelerated computing. Check each course for access requirements and pricing.', 'url': 'https://learn.nvidia.com/self-paced-courses', 'source': 'NVIDIA · Training', 'topics': ['build'], 'action': 'Choose one AI learning module and add a small practice project to apply what you learn.'},
 ]
 GUIDES = [{**item, 'published': None, 'kind': 'guide'} for item in GUIDES]
 
@@ -290,7 +293,10 @@ def select_items(data, topic='latest', query='', now=None):
                 items.append(item);seen.add(item['url'])
     items.sort(key=lambda item: item.get('published', 0), reverse=True)
     if query or topic != 'latest' or not items:
-        items.extend(item for item in GUIDES if item['url'] not in seen)
+        guides = [item for item in GUIDES if item['url'] not in seen]
+        # Explicit searches surface durable learning guides even when a busy
+        # publisher fills the bounded results with recent articles.
+        items = guides + items if query else items + guides
     def matches(item):
         if topic != 'latest' and topic not in item.get('topics', []):
             return False

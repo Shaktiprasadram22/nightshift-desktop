@@ -16,7 +16,7 @@ BASE = Path(__file__).resolve().parent
 CONFIG = HOME / '.config/nightshift-home/config.json'
 CACHE = HOME / '.cache/nightshift-home/github.json'
 DEFAULTS = {
-    'display_name': '',
+    'display_name': '', 'show_name': False,
     'github_username': '', 'side': 'left', 'autostart': False,
     'show_clock': True, 'show_shortcuts': True, 'show_github': False,
     'show_codex': False, 'show_session_titles': False,

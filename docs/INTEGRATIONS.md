@@ -74,6 +74,8 @@ It selects recent AI articles with practical topics such as caching, inference, 
 
 Descriptions are publisher excerpts. Suggested **Try** actions are small experiments inferred from the topic; measure their effect on your own workload. Reference documentation remains available with a **Guide** label. The footer reports refresh state; its tooltip lists each source’s last check or error. Failed sources keep their previous cache, while successful sources update independently. Conditional requests reduce repeated downloads when supported by the publisher.
 
+Search **NVIDIA** to find its official TensorRT-LLM tuning guide, Triton serving optimization guide, and self-paced AI training catalog alongside recent developer articles. Matching reference guides appear first in searches so frequent news cannot crowd them out. Guides keep their **Guide** label and are available even when a publisher feed is offline; opening the linked content requires a connection.
+
 The search bar filters this resource collection locally. **Web** explicitly opens an AI-focused Google search in your browser. Search text is not sent to a model or stored in the feed cache. This feature needs no AI API key.
 
 **To-do** adds an actionable experiment and a source link. Find that link under **Open learning source** in the task’s actions menu. **Notes** appends the takeaway, suggested experiment, date/source, and URL to your current text, including unsaved typing. Existing task edits are retained. Both buttons remain enabled after saving. A duplicate click reports “Already in” without creating another copy; after removing the resource from Notes or deleting its task, you can save it again.

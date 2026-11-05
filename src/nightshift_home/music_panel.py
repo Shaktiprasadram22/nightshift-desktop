@@ -1,10 +1,11 @@
 """A compact transparent YouTube Music shortcut and transport controls."""
-from gi.repository import Gtk, Gio, Pango, GLib
+from gi.repository import Gtk, Gio, Pango, GLib, Atk
 from clock_panel import css, text
 from personal_widgets import transparent_scroller
 from music_data import MUSIC_URL, reopen_url, track, permitted, is_music, clean
 from music_player import MusicPlayer
 from music_progress import duration, seekable, stamp, track_key
+from shortcut_glyphs import ShortcutGlyph
 
 
 class MusicPanel(Gtk.Box):
@@ -20,7 +21,8 @@ class MusicPanel(Gtk.Box):
         hint = next((n for n in ('chrome', 'chromium', 'brave', 'firefox') if n in browser), '')
         self.player = MusicPlayer(self.render, history, hint)
         header = Gtk.Box(spacing=9)
-        image = Gtk.Image.new_from_icon_name('youtube-music', Gtk.IconSize.LARGE_TOOLBAR)
+        image = ShortcutGlyph('music', 24)
+        image.get_accessible().set_role(Atk.Role.REDUNDANT_OBJECT)
         header.pack_start(image, False, False, 0)
         title = text('YouTube Music', 'personal-title')
         title.set_max_width_chars(1); title.set_ellipsize(Pango.EllipsizeMode.END)

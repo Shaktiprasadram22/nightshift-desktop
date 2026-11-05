@@ -33,6 +33,7 @@ import cloudflare_data
 import cloudflare_oauth
 from layout import Layout,Handles,MINIMUM,clamp_rect,create_editor,find_free_rect
 from line_clock import LineClock
+from name_widget import NameWidget
 from personal_widgets import NotesWidget,TodoWidget
 from ai_panel import AIPanel
 from system_panel import SystemPanel
@@ -145,7 +146,7 @@ class Home(Gtk.Application):
         self.cloudflare_attempt=0;self.cloudflare_connecting=False;self.cloudflare_cancel=threading.Event()
         self.cloudflare_dialog=None;self.cloudflare_url=None;self.cloudflare_generation=0
         self.layout=Layout();self.handles={};self.arranging=False;self.layout_editor=None
-        self.notes_widget=None;self.todo_widget=None;self.ai_panel=None
+        self.notes_widget=None;self.todo_widget=None;self.ai_panel=None;self.name_widget=None
         self.ai_data=ai_feed.load_cache();self.ai_busy=False;self.ai_errors={};self.ai_attempt=0
         self.theme_window=None;self.style_provider=None
         self.system_panel=None
@@ -201,7 +202,7 @@ class Home(Gtk.Application):
             print('Nightshift Home desktop widgets require an X11 session.',file=sys.stderr)
             self.quit();return
         self.hold();self.held=True
-        builders=[('clock',self.build_clock),('gmail',self.build_gmail),
+        builders=[('clock',self.build_clock),('name',self.build_name),('gmail',self.build_gmail),
                 ('photos',self.build_photos),('github',self.build_github),
                 ('codex',self.build_codex)]
         builders += [('icon-'+name,lambda n=name:self.build_app_icon(n)) for name in ('gmail','photos','github','codex','handy','theme','google')]
@@ -289,6 +290,13 @@ class Home(Gtk.Application):
             image.set_pixel_size(size)
         column.scale_for_window=scale
         return column
+
+    def build_name(self):
+        def arrange():
+            self.start_arrange()
+            self.select_layout_widget('name')
+        self.name_widget=NameWidget(self.config.get('display_name',''),arrange)
+        return self.name_widget
 
     def build_notes(self):
         self.notes_widget=NotesWidget(self);return self.notes_widget
@@ -701,6 +709,7 @@ class Home(Gtk.Application):
         write_json(CONFIG,updated)
         self.config=updated
         self.update_clock_caption()
+        if self.name_widget:self.name_widget.set_text(value)
         return value
 
     def capture_detail(self):
@@ -846,6 +855,7 @@ class Home(Gtk.Application):
         gx,gy,_,_=resolved['icon-gmail'];additions['icon-google']=(gx-94,gy,84,106)
         additions['icon-handy']=(gx-188,gy,84,106)
         additions['icon-theme']=(gx-282,gy,84,106)
+        additions['name']=(110 if compact else 140,h-138,360,96)
         for name,preferred in additions.items():
             if name in self.layout.items:
                 resolved[name]=self.layout.resolve(name,preferred,(w,h));occupied.append(resolved[name])
@@ -1125,7 +1135,7 @@ class Home(Gtk.Application):
         profiles.connect('clicked',lambda *_:self.show_profiles());content.pack_start(profiles,False,False,0)
         project=Gtk.Button(label='Project status · Git, editor and terminal')
         project.connect('clicked',lambda *_:self.show_project());content.pack_start(project,False,False,0)
-        for title,key in [('Clock and date','show_clock'),('Notes','show_notes'),('To-do list','show_todo'),('AI Learning','show_ai_feed'),('System monitor · CPU, RAM, storage','show_system'),('YouTube Music player','show_music'),('Google shortcut','show_google'),('Handy shortcut','show_handy'),('RGB Studio shortcut','show_theme'),('App icons','show_shortcuts'),('Cloudflare site insights','show_cloudflare'),('GitHub activity','show_github'),('Gmail inbox','show_gmail'),('Google Photos frame','show_photos'),('Recent Codex sessions','show_codex'),('Show Codex session names','show_session_titles'),('Reduce motion','reduced_motion'),('Start when I log in','autostart')]:
+        for title,key in [('Clock and date','show_clock'),('Separate name widget','show_name'),('Notes','show_notes'),('To-do list','show_todo'),('AI Learning','show_ai_feed'),('System monitor · CPU, RAM, storage','show_system'),('YouTube Music player','show_music'),('Google shortcut','show_google'),('Handy shortcut','show_handy'),('RGB Studio shortcut','show_theme'),('App icons','show_shortcuts'),('Cloudflare site insights','show_cloudflare'),('GitHub activity','show_github'),('Gmail inbox','show_gmail'),('Google Photos frame','show_photos'),('Recent Codex sessions','show_codex'),('Show Codex session names','show_session_titles'),('Reduce motion','reduced_motion'),('Start when I log in','autostart')]:
             row=box(False,12);row.pack_start(label(title),True,True,0)
             toggle=Gtk.Switch();toggle.set_active(self.config[key]);accessible(toggle,title)
             toggle.connect('notify::active',lambda w,_p,k=key:self.set_option(k,w.get_active()))

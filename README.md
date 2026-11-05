@@ -25,7 +25,7 @@ Built on **Zorin OS 18.1 · GNOME 46 · X11**. Native GTK widgets, a static gene
 | Productivity | Project/app/session launcher, Git status, optional named workspace shortcuts |
 | Terminal | Coordinated GNOME Terminal colors, a small startup card, and a launcher that avoids stale D-Bus routing |
 
-Set an optional **Display name** in Home settings to personalize the clock caption. Leave it empty to show the standard local-time caption.
+Set an optional **Display name** in Home settings to personalize the clock caption. Enable **Separate name widget** for transparent, scalable lettering you can place independently. Click that name to open Arrange desktop, drag its header to move, and pull its lower-right corner to resize. Position and size save automatically. Leave the name empty to show the standard local-time clock caption.
 
 This is a desktop customization project, not a distribution or window manager. The widget host currently requires **X11**. Other GNOME versions, Wayland, KDE, and Hyprland are not verified targets.
 

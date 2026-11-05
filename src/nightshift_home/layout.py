@@ -5,12 +5,12 @@ import math
 from data import HOME, write_json
 
 PATH = HOME / '.config/nightshift-home/layout.json'
-NAMES = {'clock':'Clock', 'icon-gmail':'Gmail', 'icon-photos':'Photos',
+NAMES = {'clock':'Clock', 'name':'Display name', 'icon-gmail':'Gmail', 'icon-photos':'Photos',
          'icon-github':'GitHub', 'icon-codex':'Codex', 'shortcuts':'Desktop controls',
          'cloudflare':'Cloudflare', 'notes':'Notes', 'todo':'To-do',
          'ai-feed':'AI Learning', 'icon-handy':'Handy', 'icon-theme':'RGB Studio', 'icon-google':'Google',
          'system':'System monitor', 'music':'YouTube Music'}
-MINIMUM = {'clock':(240,140),'shortcuts':(260,40),'cloudflare':(320,210),
+MINIMUM = {'clock':(240,140),'name':(160,72),'shortcuts':(260,40),'cloudflare':(320,210),
            'notes':(280,200),'todo':(280,300),'ai-feed':(320,320),'system':(300,210),'music':(280,195),
            **{name:(64,94) for name in NAMES if name.startswith('icon-')}}
 

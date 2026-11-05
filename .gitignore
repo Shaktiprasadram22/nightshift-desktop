@@ -16,6 +16,7 @@ node_modules/
 dist/
 build/
 artifacts/
+.impeccable/review/
 src/nightshift_home/*-checks.json
 src/nightshift_home/*-journal.json
 src/nightshift_home/popup-state.json
