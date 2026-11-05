@@ -254,6 +254,7 @@ class Home(Gtk.Application):
         accent=style(box(False),'clock-accent');accent.set_size_request(54,2)
         accent.set_halign(Gtk.Align.CENTER);clock.pack_start(accent,False,False,0)
         self.clock_zone=label('','clock-zone',.5);clock.pack_start(self.clock_zone,False,False,0)
+        self.clock_zone.set_ellipsize(Pango.EllipsizeMode.END);self.clock_zone.set_max_width_chars(1)
         self.clock_button=style(Gtk.Button(),'clock-button')
         self.clock_button.add(clock)
         accessible(self.clock_button,'Open calendar and focus timer')
@@ -681,11 +682,26 @@ class Home(Gtk.Application):
         return False
 
     def update_clock_caption(self):
+        name=self.config.get('display_name','')
+        context=self.clock_zone.get_style_context()
+        if name and self.focus.state=='idle':context.add_class('clock-personalized')
+        else:context.remove_class('clock-personalized')
         if self.focus.state=='running':caption='FOCUS   /   '+self.focus.display
         elif self.focus.state=='paused':caption='PAUSED   /   '+self.focus.display
         elif self.focus.state=='complete':caption='FOCUS COMPLETE   /   TAKE A BREAK'
         else:caption='LOCAL TIME   /   '+datetime.now().astimezone().tzname()
+        details=(name+' · ' if name else '')+caption
+        if name:caption=name+'   /   '+(datetime.now().astimezone().tzname() if self.focus.state=='idle' else caption)
         self.clock_zone.set_text(caption)
+        self.clock_zone.set_tooltip_text(details)
+
+    def set_display_name(self,value):
+        value=' '.join(value.split())[:24]
+        updated={**self.config,'display_name':value}
+        write_json(CONFIG,updated)
+        self.config=updated
+        self.update_clock_caption()
+        return value
 
     def capture_detail(self):
         # Keep inbox content in memory; only nonprivate UI previews are exported.
@@ -1090,6 +1106,16 @@ class Home(Gtk.Application):
         content=box(spacing=16);content.set_border_width(24);scrolled.add(content)
         content.pack_start(label('Your desktop','manager-title'),False,False,0)
         content.pack_start(label('Google apps open in your browser. GitHub and Codex open a panel.','muted'),False,False,0)
+        name_row=box(False,8);name_row.pack_start(label('Display name'),False,False,0)
+        name_entry=Gtk.Entry();name_entry.set_max_length(24);name_entry.set_width_chars(12)
+        name_entry.set_text(self.config.get('display_name',''));name_entry.set_placeholder_text('Your name')
+        accessible(name_entry,'Desktop display name');name_row.pack_start(name_entry,True,True,0)
+        name_save=Gtk.Button(label='Save');accessible(name_save,'Save desktop display name')
+        def save_name(*_):
+            try:name_entry.set_text(self.set_display_name(name_entry.get_text()))
+            except OSError:self.show_message('Your display name could not be saved. Please retry.')
+        name_save.connect('clicked',save_name);name_entry.connect('activate',save_name)
+        name_row.pack_end(name_save,False,False,0);content.pack_start(name_row,False,False,0)
         content.pack_start(label('WIDGETS','manager-section'),False,False,0)
         theme_button=Gtk.Button(label='RGB Studio · adjust theme colors')
         theme_button.connect('clicked',lambda *_:self.show_theme());content.pack_start(theme_button,False,False,0)

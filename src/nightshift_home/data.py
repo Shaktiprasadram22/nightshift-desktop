@@ -16,6 +16,7 @@ BASE = Path(__file__).resolve().parent
 CONFIG = HOME / '.config/nightshift-home/config.json'
 CACHE = HOME / '.cache/nightshift-home/github.json'
 DEFAULTS = {
+    'display_name': '',
     'github_username': '', 'side': 'left', 'autostart': False,
     'show_clock': True, 'show_shortcuts': True, 'show_github': False,
     'show_codex': False, 'show_session_titles': False,
@@ -43,6 +44,7 @@ def load_config():
         pass
     for key, default in DEFAULTS.items():
         if not isinstance(result[key], type(default)): result[key] = default
+    result['display_name'] = ' '.join(result['display_name'].split())[:24]
     if result['side'] not in ('left', 'right'): result['side'] = 'left'
     if result['project_editor'] not in ('code', 'cursor'): result['project_editor'] = 'code'
     if result['cloudflare_placement'] not in ('right', 'bottom'): result['cloudflare_placement'] = 'right'

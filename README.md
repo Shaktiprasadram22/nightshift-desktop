@@ -14,7 +14,7 @@ Built on **Zorin OS 18.1 · GNOME 46 · X11**. Native GTK widgets, a static gene
 | --- | --- |
 | RGB Studio | Primary, secondary, and highlight colors; darkness and glow controls; presets; preview; one-step Undo |
 | Desktop | Transparent GTK/Shell surfaces, quick settings and notification styling, bottom dock configuration, original 4K wallpaper generator |
-| Clock | Scalable single-stroke numerals, calendar, and focus timer |
+| Clock | Scalable single-stroke numerals, optional personal display name, calendar, and focus timer |
 | Layouts | Move and resize widgets with pointer or keyboard; saved Coding, Focus, and Chill layouts |
 | Notes & tasks | Local autosaved notes, to-do items, completion and undo |
 | System monitor | CPU, RAM, disk, and network activity with bounded sampling |
@@ -24,6 +24,8 @@ Built on **Zorin OS 18.1 · GNOME 46 · X11**. Native GTK widgets, a static gene
 | Music | YouTube Music shortcut, last played track, browser media controls, and seeking when supported |
 | Productivity | Project/app/session launcher, Git status, optional named workspace shortcuts |
 | Terminal | Coordinated GNOME Terminal colors, a small startup card, and a launcher that avoids stale D-Bus routing |
+
+Set an optional **Display name** in Home settings to personalize the clock caption. Leave it empty to show the standard local-time caption.
 
 This is a desktop customization project, not a distribution or window manager. The widget host currently requires **X11**. Other GNOME versions, Wayland, KDE, and Hyprland are not verified targets.
 
