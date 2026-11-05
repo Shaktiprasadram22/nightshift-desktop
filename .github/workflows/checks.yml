@@ -1,0 +1,22 @@
+name: Checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-gi python3-gi-cairo python3-cairo gir1.2-gtk-3.0 xvfb dbus-x11 fonts-inter fonts-jetbrains-mono
+      - name: Install optional editor parser
+        run: npm ci --ignore-scripts --no-audit --no-fund --prefix src/nightshift_home
+      - name: Offline unit and installer tests
+        run: /usr/bin/python3 tools/test.py
+      - name: Render GTK demo and check allocations
+        run: xvfb-run -a -s '-screen 0 1920x1080x24' dbus-run-session -- /usr/bin/python3 tools/render_demo.py --output /tmp/nightshift-demo.png

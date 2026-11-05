@@ -1,0 +1,4 @@
+{
+  "account_id": "00000000000000000000000000000000",
+  "hosts": ["example.com", "example.net", "example.org", "example.test"]
+}

@@ -1,0 +1,639 @@
+[
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "foreground"
+    ],
+    "value": "#d8e8f7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "descriptionForeground"
+    ],
+    "value": "#a7bbd2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "focusBorder"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editor.background"
+    ],
+    "value": "#0b1423"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editor.foreground"
+    ],
+    "value": "#d8e8f7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorCursor.foreground"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editor.lineHighlightBackground"
+    ],
+    "value": "#122137"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editor.selectionBackground"
+    ],
+    "value": "#234761"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editor.inactiveSelectionBackground"
+    ],
+    "value": "#1c3046"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorLineNumber.foreground"
+    ],
+    "value": "#7f96b3"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorLineNumber.activeForeground"
+    ],
+    "value": "#a5efff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorIndentGuide.background1"
+    ],
+    "value": "#23354d"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorIndentGuide.activeBackground1"
+    ],
+    "value": "#42647d"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorBracketMatch.background"
+    ],
+    "value": "#193d50"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorBracketMatch.border"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorWidget.background"
+    ],
+    "value": "#122137"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorSuggestWidget.background"
+    ],
+    "value": "#122137"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorSuggestWidget.selectedBackground"
+    ],
+    "value": "#234761"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "sideBar.background"
+    ],
+    "value": "#0c1728"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "sideBar.foreground"
+    ],
+    "value": "#c4d4e7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "sideBar.border"
+    ],
+    "value": "#23354d"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "sideBarSectionHeader.background"
+    ],
+    "value": "#13243a"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "activityBar.background"
+    ],
+    "value": "#08111f"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "activityBar.foreground"
+    ],
+    "value": "#a5efff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "activityBar.inactiveForeground"
+    ],
+    "value": "#91a6c0"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "activityBar.activeBorder"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "activityBarBadge.background"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "activityBarBadge.foreground"
+    ],
+    "value": "#071520"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "titleBar.activeBackground"
+    ],
+    "value": "#101d30"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "titleBar.activeForeground"
+    ],
+    "value": "#e1ecfa"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "titleBar.inactiveBackground"
+    ],
+    "value": "#0c1728"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "titleBar.inactiveForeground"
+    ],
+    "value": "#a7bbd2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "editorGroupHeader.tabsBackground"
+    ],
+    "value": "#08111f"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "tab.activeBackground"
+    ],
+    "value": "#0b1423"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "tab.activeForeground"
+    ],
+    "value": "#edf8ff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "tab.activeBorderTop"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "tab.inactiveBackground"
+    ],
+    "value": "#0c1728"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "tab.inactiveForeground"
+    ],
+    "value": "#a7bbd2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "tab.border"
+    ],
+    "value": "#23354d"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "panel.background"
+    ],
+    "value": "#0b1423"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "panel.border"
+    ],
+    "value": "#2b4059"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "panelTitle.activeBorder"
+    ],
+    "value": "#bb9af7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "statusBar.background"
+    ],
+    "value": "#12263a"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "statusBar.foreground"
+    ],
+    "value": "#c7e7f5"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "statusBar.noFolderBackground"
+    ],
+    "value": "#12263a"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "statusBar.debuggingBackground"
+    ],
+    "value": "#50345c"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "button.background"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "button.foreground"
+    ],
+    "value": "#071520"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "button.hoverBackground"
+    ],
+    "value": "#88e7fa"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "input.background"
+    ],
+    "value": "#14253b"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "input.foreground"
+    ],
+    "value": "#e1ecfa"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "input.border"
+    ],
+    "value": "#405a76"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "dropdown.background"
+    ],
+    "value": "#14253b"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "list.activeSelectionBackground"
+    ],
+    "value": "#234761"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "list.activeSelectionForeground"
+    ],
+    "value": "#edf8ff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "list.inactiveSelectionBackground"
+    ],
+    "value": "#1b3046"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "list.hoverBackground"
+    ],
+    "value": "#193149"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "badge.background"
+    ],
+    "value": "#bb9af7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "badge.foreground"
+    ],
+    "value": "#0b1423"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "notificationCenterHeader.background"
+    ],
+    "value": "#122137"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "notifications.background"
+    ],
+    "value": "#0c1728"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "notifications.foreground"
+    ],
+    "value": "#e1ecfa"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "quickInput.background"
+    ],
+    "value": "#0c1728"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "quickInput.foreground"
+    ],
+    "value": "#e1ecfa"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "pickerGroup.foreground"
+    ],
+    "value": "#a5efff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.background"
+    ],
+    "value": "#0b1423"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.foreground"
+    ],
+    "value": "#d8e8f7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminalCursor.foreground"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBlack"
+    ],
+    "value": "#18243a"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiRed"
+    ],
+    "value": "#f7768e"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiGreen"
+    ],
+    "value": "#9ece6a"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiYellow"
+    ],
+    "value": "#e0af68"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBlue"
+    ],
+    "value": "#7aa2f7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiMagenta"
+    ],
+    "value": "#bb9af7"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiCyan"
+    ],
+    "value": "#58d8f2"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiWhite"
+    ],
+    "value": "#c0d2e6"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightBlack"
+    ],
+    "value": "#728bad"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightRed"
+    ],
+    "value": "#ff91a4"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightGreen"
+    ],
+    "value": "#b5e890"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightYellow"
+    ],
+    "value": "#f0cb8e"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightBlue"
+    ],
+    "value": "#9fbcff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightMagenta"
+    ],
+    "value": "#d2b6ff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightCyan"
+    ],
+    "value": "#9beaff"
+  },
+  {
+    "keys": [
+      "workbench.colorCustomizations",
+      "terminal.ansiBrightWhite"
+    ],
+    "value": "#edf6ff"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "comments"
+    ],
+    "value": "#8fa7c2"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "strings"
+    ],
+    "value": "#a4d69e"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "keywords"
+    ],
+    "value": "#bb9af7"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "numbers"
+    ],
+    "value": "#f0cb8e"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "functions"
+    ],
+    "value": "#7edff2"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "types"
+    ],
+    "value": "#9fbcff"
+  },
+  {
+    "keys": [
+      "editor.tokenColorCustomizations",
+      "variables"
+    ],
+    "value": "#d8e8f7"
+  }
+]

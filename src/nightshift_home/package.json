@@ -1,0 +1,10 @@
+{
+  "name": "nightshift-editor-colors",
+  "version": "0.1.0",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "description": "Optional JSONC support for RGB Studio editor matching",
+  "dependencies": {
+    "jsonc-parser": "3.3.1"
+  }
+}

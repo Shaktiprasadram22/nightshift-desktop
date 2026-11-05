@@ -1,0 +1,134 @@
+/* Nightshift: transparent top bar. Kept across RGB Studio color changes. */
+#panel {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Notification center and calendar: clear surfaces over the popup backdrop. */
+.datemenu-popover,
+.datemenu-popover.popup-menu-content,
+.datemenu-popover .popup-menu-content,
+.datemenu-popover .datemenu-calendar-column,
+.datemenu-popover .calendar,
+.datemenu-popover .calendar:insensitive,
+.datemenu-popover .datemenu-today-button,
+.datemenu-popover .datemenu-today-button:insensitive,
+.datemenu-popover .events-button,
+.datemenu-popover .world-clocks-button,
+.datemenu-popover .weather-button,
+.datemenu-popover .message-list,
+.datemenu-popover .message,
+.notification-banner {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+.datemenu-popover, .notification-banner {
+  color: #e1ebf7;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+.datemenu-popover .message-list .message-list-placeholder,
+.datemenu-popover .message .message-header,
+.notification-banner .message-header {
+  color: #b6c9de;
+}
+.datemenu-popover .message:hover,
+.datemenu-popover .message:focus,
+.datemenu-popover .datemenu-today-button:hover,
+.datemenu-popover .datemenu-today-button:focus,
+.datemenu-popover .events-button:hover,
+.datemenu-popover .events-button:focus,
+.datemenu-popover .world-clocks-button:hover,
+.datemenu-popover .world-clocks-button:focus,
+.datemenu-popover .weather-button:hover,
+.datemenu-popover .weather-button:focus,
+.notification-banner:hover,
+.notification-banner:focus {
+  background-color: rgba(88,216,242,0.10) !important;
+  box-shadow: inset 0 0 0 1px rgba(88,216,242,0.30) !important;
+}
+
+/* The top-right system menu and its expanded Wi-Fi/Bluetooth sections. */
+.quick-settings,
+.quick-settings.popup-menu-content,
+.quick-settings .popup-menu-content,
+.quick-toggle-menu,
+.quick-toggle-menu:insensitive,
+.quick-toggle-menu-container {
+  background-color: transparent !important;
+  background-image: none !important;
+  background-gradient-direction: none;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.quick-settings, .quick-toggle-menu {
+  color: #e1ebf7;
+}
+
+/* Clear button fills, including selected tiles and their separate arrows.
+   Underlines identify enabled toggles; hover/focus use a visible outline. */
+.quick-settings StButton,
+.quick-settings .button,
+.quick-settings .icon-button,
+.quick-settings .quick-toggle,
+.quick-settings .quick-toggle-arrow,
+.quick-toggle-menu StButton,
+.quick-toggle-menu .button,
+.quick-toggle-menu .icon-button,
+.quick-toggle-menu .popup-menu-item {
+  background-color: transparent !important;
+  background-image: none !important;
+  background-gradient-direction: none;
+  color: #e1ebf7 !important;
+  border-color: transparent !important;
+  box-shadow: inset 0 0 0 1px rgba(225,235,247,0.24) !important;
+}
+.quick-settings .quick-toggle:checked,
+.quick-settings .quick-toggle-arrow:checked,
+.quick-settings .button:checked,
+.quick-settings .icon-button:checked,
+.quick-toggle-menu .button:checked {
+  color: #9de8f5 !important;
+  box-shadow: inset 0 -2px 0 0 #58d8f2 !important;
+}
+.quick-settings StButton:hover,
+.quick-settings StButton:focus,
+.quick-settings .button:hover,
+.quick-settings .button:focus,
+.quick-settings .icon-button:hover,
+.quick-settings .icon-button:focus,
+.quick-settings .quick-toggle:hover,
+.quick-settings .quick-toggle:focus,
+.quick-settings .quick-toggle-arrow:hover,
+.quick-settings .quick-toggle-arrow:focus,
+.quick-toggle-menu StButton:hover,
+.quick-toggle-menu StButton:focus,
+.quick-toggle-menu .button:hover,
+.quick-toggle-menu .button:focus,
+.quick-toggle-menu .icon-button:hover,
+.quick-toggle-menu .icon-button:focus,
+.quick-toggle-menu .popup-menu-item:hover,
+.quick-toggle-menu .popup-menu-item:focus {
+  box-shadow: inset 0 0 0 2px #8ee7f6 !important;
+}
+.quick-settings StButton:insensitive,
+.quick-settings .button:insensitive,
+.quick-settings .icon-button:insensitive,
+.quick-settings .quick-toggle:insensitive,
+.quick-settings .quick-toggle-arrow:insensitive,
+.quick-toggle-menu StButton:insensitive,
+.quick-toggle-menu .button:insensitive,
+.quick-toggle-menu .popup-menu-item:insensitive {
+  color: #a2afbd !important;
+  box-shadow: inset 0 0 0 1px rgba(225,235,247,0.12) !important;
+}
+.quick-toggle-menu .header .icon,
+.quick-toggle-menu .header .icon.active {
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #9de8f5;
+  box-shadow: none !important;
+}

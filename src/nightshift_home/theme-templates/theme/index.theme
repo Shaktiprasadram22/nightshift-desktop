@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Midnight-Cyan
+Comment=Midnight blue and cyan; locally customized from Orchis
+
+[X-GNOME-Metatheme]
+GtkTheme=Midnight-Cyan
+MetacityTheme=Midnight-Cyan
+IconTheme=Midnight-Cyan-Icons
+CursorTheme=Bibata-Modern-Ice
+ButtonLayout=appmenu:minimize,maximize,close

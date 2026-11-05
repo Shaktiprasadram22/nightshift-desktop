@@ -1,0 +1,55 @@
+/* Nightshift RGB: native GTK 4 / libadwaita colors, with readable state colors. */
+@define-color accent_bg_color #58d8f2;
+@define-color accent_fg_color #071520;
+@define-color accent_color #81e3f7;
+@define-color window_bg_color #0b1423;
+@define-color window_fg_color #d8e8f7;
+@define-color view_bg_color #09111e;
+@define-color view_fg_color #d8e8f7;
+@define-color headerbar_bg_color #101e32;
+@define-color headerbar_fg_color #d8e8f7;
+@define-color headerbar_border_color #9aafc8;
+@define-color headerbar_backdrop_color #0e192b;
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.20);
+@define-color headerbar_darker_shade_color rgba(0, 0, 0, 0.55);
+@define-color sidebar_bg_color #101c30;
+@define-color sidebar_fg_color #d0dff0;
+@define-color sidebar_backdrop_color #0e192a;
+@define-color sidebar_shade_color rgba(0, 0, 0, 0.18);
+@define-color sidebar_border_color rgba(132, 167, 212, 0.16);
+@define-color secondary_sidebar_bg_color #0e192b;
+@define-color secondary_sidebar_fg_color #d0dff0;
+@define-color secondary_sidebar_backdrop_color #0d1727;
+@define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.18);
+@define-color secondary_sidebar_border_color rgba(132, 167, 212, 0.16);
+@define-color card_bg_color #16243a;
+@define-color card_fg_color #d8e8f7;
+@define-color card_shade_color rgba(0, 0, 0, 0.22);
+@define-color dialog_bg_color #18263d;
+@define-color dialog_fg_color #d8e8f7;
+@define-color popover_bg_color #18263d;
+@define-color popover_fg_color #d8e8f7;
+@define-color popover_shade_color rgba(0, 0, 0, 0.25);
+@define-color thumbnail_bg_color #203149;
+@define-color thumbnail_fg_color #d8e8f7;
+@define-color shade_color rgba(0, 0, 0, 0.22);
+@define-color scrollbar_outline_color rgba(0, 0, 0, 0.4);
+/* Error, warning, success and destructive colors retain their native meaning. */
+headerbar {
+  background-image: linear-gradient(to right, rgba(88, 216, 242, 0.72), rgba(141, 141, 242, 0.68), rgba(214, 133, 244, 0.72));
+  background-size: 100% 2px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+}
+.navigation-sidebar > row:selected {
+  background-color: #1b3049;
+  background-image: linear-gradient(to right, rgba(88, 216, 242, 0.12), rgba(187, 154, 247, 0.10));
+  box-shadow: inset 3px 0 #58d8f2;
+  color: #e1f5ff;
+}
+.navigation-sidebar > row:hover:not(:selected) {
+  background-color: rgba(122, 162, 247, 0.10);
+}
+.navigation-sidebar > row:selected:hover {
+  background-color: #243e59;
+}

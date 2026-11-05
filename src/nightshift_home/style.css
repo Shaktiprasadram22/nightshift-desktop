@@ -1,0 +1,186 @@
+window.nightshift-widget { background-color: transparent; background-image: none; border: none; box-shadow: none; }
+.nightshift-widget, .nightshift-manager { font-family: "Inter", "Noto Sans", sans-serif; color: #e1ecfa; }
+.eyebrow { color: #a5bed3; font-size: 10px; font-weight: 500; letter-spacing: 2px; }
+.clock-face { padding: 0; }
+.clock-time { font-family: "Michroma"; font-size: 80px; font-weight: 400; color: #edf8ff; letter-spacing: -2px; }
+.clock-date { color: #c2d1e2; font-size: 11px; font-weight: 500; letter-spacing: 2px; }
+.clock-zone { color: #9eb4cc; font-size: 9px; letter-spacing: 2px; }
+.clock-accent { background-image: linear-gradient(to right, #58d8f2, #bb9af7, #ff6bb4); border-radius: 2px; }
+.home-card { background-color: rgba(7,17,31,0.42); border: 1px solid rgba(146,177,211,0.08); border-radius: 17px; padding: 14px 16px; }
+.gmail-card, .photos-card { border: 1px solid rgba(146,177,211,0.10); }
+.github-card, .codex-card { background-color: rgba(7,17,31,0.35); }
+.card-title { color: #e1ecfa; font-size: 14px; font-weight: 600; }
+.muted { color: #b0c3d9; font-size: 12px; }
+.tiny { color: #9fb4cd; font-size: 10px; }
+.streak { color: #76e0f4; font-size: 22px; font-weight: 500; }
+.metric { color: #d7def5; font-size: 18px; font-weight: 500; }
+.metric-label { color: #a7bbd2; font-size: 10px; }
+.mail-count { font-size: 12px; font-weight: 600; color: #ffb0ca; }
+.mail-sender { font-size: 12px; font-weight: 500; color: #e1ecfa; }
+.photo-title { font-size: 14px; font-weight: 500; color: #d5dcf8; }
+.photo-empty { padding: 8px; }
+.nightshift-widget button { background-image: none; box-shadow: none; text-shadow: none; border: 1px solid transparent; color: #e1ecfa; transition: background-color 120ms ease; }
+.nightshift-widget button:hover { background-color: rgba(88,216,242,0.10); }
+.nightshift-widget button:focus { border-color: #77e3f7; outline: 1px solid #77e3f7; outline-offset: -2px; }
+.nightshift-widget button:active { background-color: rgba(187,154,247,0.20); }
+.nightshift-widget button.icon-button { padding: 4px; min-width: 24px; min-height: 24px; border-radius: 9px; background: transparent; border: 1px solid rgba(174,191,212,.20); color: #d1e3ef; }
+.nightshift-widget button.icon-button:hover { background: transparent; color: #edf8ff; border-color: #8ee7f6; box-shadow: 0 0 8px rgba(88,216,242,.20), inset 0 -1px #8ee7f6; }
+.nightshift-widget button.icon-button:focus { border-color: #c4b0f2; outline: 2px solid #c4b0f2; outline-offset: 1px; }
+.nightshift-widget button.icon-button:active { background: transparent; border-color: #ffbad9; color: #ffbad9; box-shadow: inset 0 -2px #ffbad9; }
+.nightshift-widget button.icon-button:disabled { background: transparent; border-color: rgba(174,191,212,.10); color: #8496a9; box-shadow: none; outline: none; }
+.nightshift-widget button.text-button { background-color: rgba(88,216,242,0.06); border-radius: 8px; padding: 5px 9px; font-size: 10px; color: #a3e7f4; }
+.nightshift-widget button.session { padding: 6px 8px; border-radius: 8px; background-color: rgba(116,140,191,0.04); }
+.nightshift-widget button.mail-row { padding: 3px 2px; border-radius: 6px; background-color: transparent; }
+.session-title { font-size: 13px; font-weight: 500; color: #e1ecfa; }
+.session-subtitle { font-size: 10px; color: #a7bbd2; }
+.status-error { color: #f0b9c7; font-size: 11px; }
+.nightshift-manager { background-color: #0c1728; }
+.nightshift-manager label { color: #d8e8f7; }
+.nightshift-manager .manager-title { font-size: 24px; font-weight: 700; }
+.nightshift-manager .manager-section { color: #83dced; font-weight: 700; font-size: 12px; }
+.nightshift-manager button { border-radius: 10px; }
+.compact .clock-time { font-size: 68px; }
+.compact .clock-date { font-size: 10px; }
+.compact .clock-zone { font-size: 9px; }
+
+.nightshift-widget button.app-icon { min-width: 36px; min-height: 36px; padding: 15px; border-radius: 19px; color: #d1e3ef; background-color: rgba(125,151,202,.035); border: 1px solid rgba(174,191,212,.24); }
+.nightshift-widget button.app-icon:focus { color: #edf8ff; border-color: #c4b0f2; outline: 2px solid #c4b0f2; outline-offset: 1px; }
+.app-label { font-size: 12px; color: #d1dfea; }
+window.detail-popup { background-color: transparent; background-image: none; border: none; padding: 0; box-shadow: none; }
+.detail-popup .home-card { background-color: #0c1728; border: 1px solid #30435a; border-radius: 18px; padding: 18px; }
+.detail-popup button { font-size: 12px; }
+.detail-popup .muted { font-size: 12px; }
+
+/* Motion is limited to direct interaction and short panel entrances. */
+.nightshift-widget button { transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease; }
+.nightshift-widget button.app-icon:hover { color: #8ee7f6; background-color: rgba(99,166,206,.045); border-color: #8ee7f6; box-shadow: 0 0 10px rgba(88,216,242,.20), inset 0 -2px #8ee7f6; }
+.nightshift-widget button.app-icon:active { color: #ffbad9; border-color: #ffbad9; box-shadow: inset 0 -2px #ffbad9; }
+.nightshift-widget button.clock-button { padding: 0; border: 1px solid transparent; border-radius: 16px; background-color: transparent; box-shadow: none; }
+.nightshift-widget button.clock-button:hover { background-color: transparent; border-color: transparent; box-shadow: none; }
+.nightshift-widget button.clock-button:focus { border-color: #58d8f2; outline: none; }
+.clock-button .clock-accent { transition: box-shadow 140ms ease; }
+.clock-button:hover .clock-accent { box-shadow: 0 0 10px rgba(88,216,242,0.7); }
+.nightshift-widget button.launcher-hint { background: none; border-radius: 7px; padding: 4px 6px; font-size: 9px; letter-spacing: 2px; color: #b7cce2; }
+.nightshift-widget button.icon-button { min-width: 24px; min-height: 24px; }
+
+.calendar-panel calendar { background-color: transparent; border: none; color: #d8e8f7; font-size: 13px; padding: 4px; }
+.calendar-panel calendar.header { background-color: transparent; color: #edf8ff; }
+.calendar-panel calendar:selected { background-color: #58d8f2; color: #061322; border-radius: 6px; }
+.calendar-panel calendar:indeterminate { color: #849bb5; }
+.calendar-panel calendar.highlight { color: #b8a5f1; }
+.calendar-panel separator, .launcher-content separator { background-color: #2b4059; min-height: 1px; }
+.timer-display { font-family: "Michroma"; font-size: 34px; color: #edf8ff; padding: 4px 0; }
+.calendar-panel progressbar trough { min-height: 3px; background-color: #253952; border: none; }
+.calendar-panel progressbar progress { min-height: 3px; background-color: #58d8f2; background-image: none; border: none; }
+.nightshift-widget button.duration-button, .nightshift-widget button.secondary-button { background: #16263c; border: 1px solid #30455e; border-radius: 9px; padding: 8px 12px; }
+.nightshift-widget button.duration-button:checked { background: #193d50; border-color: #58d8f2; color: #c6f4ff; }
+.nightshift-widget button:disabled { color: #8195ac; }
+.nightshift-widget button.primary-button { background: #58d8f2; color: #061322; border: 1px solid #58d8f2; border-radius: 9px; padding: 10px 14px; font-weight: 600; }
+.nightshift-widget button.primary-button:hover { background: #88e7fa; }
+.nightshift-widget button.primary-button:focus { outline-color: #061322; }
+
+window.nightshift-launcher { background-color: transparent; }
+.launcher-content { background: #0c1728; border: 1px solid #3b5570; border-radius: 20px; padding: 24px; }
+.launcher-title { font-size: 20px; font-weight: 600; color: #edf8ff; }
+.launcher-content entry { background: #101f34; color: #edf8ff; border: 1px solid #405a76; border-radius: 10px; padding: 12px; box-shadow: none; font-size: 14px; }
+.launcher-content entry:focus { border-color: #58d8f2; box-shadow: 0 0 0 1px #58d8f2; }
+.launcher-content button.filter-button { background: transparent; border-radius: 7px; padding: 6px 12px; color: #b0c3d9; font-size: 12px; }
+.launcher-content button.filter-button:checked { color: #a5efff; background: #1a3547; }
+.launcher-content list { background: transparent; }
+.launcher-result { border: 1px solid transparent; border-radius: 9px; padding: 10px 9px; margin: 2px 0; color: #e1ecfa; }
+.launcher-result:selected { background: #1a3149; border-color: #335a76; }
+.launcher-result:hover { background: #213c55; }
+.launcher-result:focus { border-color: #58d8f2; outline: none; }
+.launcher-result .result-title, .launcher-result:selected .result-title { font-size: 14px; font-weight: 500; color: #e1ecfa; }
+.launcher-content button.workspace-button { padding: 9px 10px; border: 1px solid #30455e; border-radius: 9px; background: #112238; font-size: 12px; }
+.launcher-content button.workspace-button:hover { border-color: #58d8f2; background: #19374b; }
+.reduce-motion *, .reduce-motion, .nightshift-widget.reduce-motion button,
+.reduce-motion .clock-accent { transition: none; animation: none; }
+
+/* Four sites at a glance. No continuously animated charts or polling spinners. */
+.cloudflare-panel { background: transparent; border: 1px solid transparent; border-radius: 19px; padding: 18px; }
+.cloudflare-panel .card-title { font-size: 16px; }
+.cf-eyebrow { color: #b6c9de; font-size: 10px; letter-spacing: .6px; }
+.cf-domain { color: #e1ecfa; font-size: 13px; font-weight: 500; }
+.cf-requests { color: #8ee7f6; font-family: "JetBrains Mono", monospace; font-size: 20px; font-weight: 400; }
+.cf-secondary { color: #c3d1e3; font-size: 12px; }
+.nightshift-widget button.cf-site { padding: 4px 8px; border-radius: 10px; background: transparent; }
+.nightshift-widget button.cf-site:hover { background: rgba(88,216,242,0.07); border-color: rgba(88,216,242,0.3); }
+.cf-detail-value { color: #9ce9f7; font-size: 14px; font-weight: 500; }
+.widget-editing { border: 1px dashed rgba(88,216,242,.65); border-radius: 12px; }
+.widget-dragbar { background: #17354a; border-radius: 8px 8px 0 0; color: #caf5ff; font-size: 10px; }
+.widget-dragbar:focus, .widget-resize-grip:focus { outline: 2px solid #58d8f2; outline-offset: -2px; }
+.widget-resize-grip { background: #21435a; border-radius: 8px 0 10px 0; color: #a7efff; font-size: 17px; }
+.cloudflare-panel scrolledwindow, .cloudflare-panel viewport { background: transparent; border: none; }
+
+/* Personal widgets float directly over the wallpaper. Color marks function;
+   only focused inputs and hovered links gain a small interaction surface. */
+.personal-widget { background: transparent; border: none; padding: 16px 18px; }
+.personal-title { font-size: 16px; font-weight: 600; color: #e1ecfa; }
+.notes-widget .personal-title { color: #9de8f5; }
+.todo-widget .personal-title { color: #c9b8f2; }
+.ai-widget .personal-title { color: #ffbad9; }
+.personal-meta { font-size: 10px; color: #b6c9de; letter-spacing: .4px; }
+.personal-status { font-size: 10px; color: #aebfd4; }
+.personal-placeholder { font-size: 13px; color: #aebfd4; }
+.personal-widget scrolledwindow, .personal-widget viewport, .personal-widget textview,
+.personal-widget textview text { background: transparent; background-image: none; border: none; box-shadow: none; color: #e1ecfa; }
+.personal-widget textview { font-size: 14px; caret-color: #8ee7f6; }
+.personal-widget textview text selection { background: #295b70; color: #ffffff; }
+.personal-widget textview:focus { outline: 1px solid rgba(141,228,244,.45); outline-offset: 1px; }
+.personal-widget entry { background: transparent; background-image: none; color: #e1ecfa; border: 1px solid rgba(155,185,220,.28); border-radius: 7px; box-shadow: none; padding: 6px 8px; min-height: 22px; font-size: 12px; caret-color: #8ee7f6; }
+.personal-widget entry:focus { border-color: #8ee7f6; box-shadow: inset 0 -1px #8ee7f6; }
+.personal-widget entry selection { background: #295b70; color: white; }
+.nightshift-widget .personal-widget button.personal-link { background: transparent; color: #b7d7eb; font-size: 10px; padding: 4px 6px; min-height: 24px; }
+.nightshift-widget .personal-widget button.personal-link:disabled { color: #8e9eb3; }
+.todo-row { padding: 3px 0; }
+.todo-row checkbutton { padding: 4px 2px; min-height: 24px; }
+.todo-row checkbutton:focus { outline: 1px solid #8ee7f6; outline-offset: 1px; }
+.todo-row check { min-width: 16px; min-height: 16px; border: 1px solid #a8b8cf; border-radius: 5px; background: transparent; color: #c4b0f2; -gtk-icon-source: none; }
+.todo-row check:checked { border-color: #c4b0f2; background: rgba(196,176,242,.18); -gtk-icon-source: -gtk-icontheme("object-select-symbolic"); }
+.task-text { font-size: 13px; color: #e1ecfa; }
+.task-done { font-size: 13px; color: #aebfd4; }
+.nightshift-widget button.ai-tab { background: transparent; border-radius: 6px; padding: 5px 10px; min-height: 24px; color: #c3d1e3; font-size: 13px; font-weight: 500; }
+.nightshift-widget button.ai-tab:checked { color: #ffe0ed; border-bottom: 1px solid #edabcf; border-radius: 0; }
+.nightshift-widget button.ai-article { background: transparent; border-radius: 7px; padding: 10px 6px; }
+.nightshift-widget button.ai-article:hover { background: rgba(161,194,225,.07); }
+.ai-title { color: #e1ecfa; font-size: 13px; font-weight: 500; }
+.ai-description { color: #c3d1e3; font-size: 11px; }
+.ai-widget .personal-meta, .ai-widget .personal-status { font-size: 12px; color: #c3d1e3; }
+.ai-widget .ai-description { font-size: 12px; }
+.ai-widget .ai-title { font-size: 14px; }
+.personal-widget scrollbar { background: transparent; border: none; }
+.personal-widget scrollbar slider { min-width: 3px; min-height: 24px; background: rgba(171,197,220,.3); border: none; }
+
+/* System readings: transparent to the desktop, fixed scales, no animation loop. */
+.system-panel { background: transparent; border: none; }
+.system-live { font-size: 11px; letter-spacing: .6px; color: #c3d1e3; }
+.system-label { font-size: 11px; letter-spacing: .6px; font-weight: 500; color: #c3d1e3; }
+.system-value { font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 400; }
+.system-cpu .system-value { color: #8ee7f6; }
+.system-ram .system-value { color: #c4b0f2; }
+.system-storage .system-value { color: #ffbad9; }
+.system-detail { font-size: 12px; color: #d1dfea; }
+.system-note { font-size: 12px; color: #c3d1e3; }
+.system-panel .personal-status { font-size: 12px; color: #c3d1e3; }
+
+/* Music transport: no cover downloads, animated equalizer, or polling loop. */
+.music-panel { background: transparent; border: none; padding: 10px 18px; }
+.music-title { font-size: 18px; font-weight: 500; color: #e1ebf7; }
+.music-artist { font-size: 12px; color: #b6c9de; }
+.nightshift-widget button.music-control { background: transparent; background-image: none; min-width: 32px; min-height: 32px; padding: 4px; border: 1px solid rgba(161,194,225,0.20); border-radius: 10px; color: #cde6f4; box-shadow: none; }
+.nightshift-widget button.music-control:hover, .nightshift-widget button.music-control:focus { background: transparent; border-color: #8ee7f6; color: #e1f5ff; }
+.nightshift-widget button.music-control:disabled { color: #8496a9; border-color: rgba(161,194,225,0.10); }
+
+/* Quiet additions share the RGB palette and transparent widget surfaces. */
+.network-speeds { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #8ee7f6; }
+.cf-health { font-size: 12px; color: #c3d1e3; }
+.cf-health.health-up { color: #8ee7f6; }
+.cf-health.health-error, .cf-health.health-warning, .cf-health.health-blocked { color: #ffbad9; }
+.music-progress { padding: 5px 0; min-height: 10px; }
+.music-progress trough { min-height: 2px; background: rgba(174,191,212,.25); border: none; box-shadow: none; }
+.music-progress highlight { min-height: 2px; background: #8ee7f6; border: none; }
+.music-progress slider { min-width: 8px; min-height: 8px; background: #8ee7f6; border: none; box-shadow: none; margin: -3px; }
+.music-progress:disabled slider { background: #8496a9; }
+.music-progress:focus { outline: 1px solid #8ee7f6; outline-offset: 2px; }
+.project-branch { font-family: "JetBrains Mono", monospace; font-size: 18px; color: #8ee7f6; }
