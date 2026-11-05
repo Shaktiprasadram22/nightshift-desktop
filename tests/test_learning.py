@@ -18,6 +18,15 @@ RSS = b'''<rss><channel><item><title>Reduce LLM latency with prefix caching</tit
 <item><title>LLM cache unsafe</title><link>javascript:alert(1)</link><pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate></item>
 <item><title>LLM cache wrong host</title><link>https://evil.example/guide</link><pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate></item>
 </channel></rss>'''
+ENGINEERING = b'''<!DOCTYPE html><html><body><article>
+<header><time>Nov 04, 2026</time></header>
+<h3><a href="/research/engineering-workflows">Scaling engineering workflows</a></h3>
+<p>Build reliable systems.<script>ignore this</script></p></article></body></html>'''
+GOOGLE_DEVELOPERS = b'''<div class="post-item glue-spacer-1-top">
+<div class="post-item__top">\n NOV. 3, 2026\n </div>
+<a href="/gemini-routing/" class="post-item__link">
+<span class="glue-headline glue-headline--headline-5">Gemini cost per task</span>
+<p class="glue-caption">Route chatbot requests to a smaller model.</p></a></div>'''
 
 
 class LearningFeedTests(unittest.TestCase):
@@ -39,6 +48,62 @@ class LearningFeedTests(unittest.TestCase):
         self.assertEqual(item['url'],'https://developer.nvidia.com/blog/latency/')
         self.assertEqual(item['published'],feed.timestamp('2026-11-05T00:00:00Z'))
 
+    def test_requested_official_rss_sources_and_brand_context(self):
+        for key, title in [('openai', 'OpenAI prompt caching'), ('n8n', 'Build a Claude agent in n8n'),
+                           ('google_ai', 'Gemini inference latency')]:
+            source = feed.SOURCES[key]
+            rss = RSS.replace(b'huggingface.co', source['host'].encode())
+            rss = rss.replace(b'Reduce LLM latency with prefix caching', title.encode())
+            rss = rss.replace(b'&lt;b&gt;Reuse shared prompts&lt;/b&gt; and benchmark AI inference.', b'Practical developer guide.')
+            items = feed.parse_feed(rss, source, NOW)
+            self.assertEqual(len(items), 1, key)
+            self.assertEqual(items[0]['source'], source['name'])
+
+    def test_anthropic_official_index_dates_links_and_cache(self):
+        source = feed.SOURCES['anthropic']
+        items = feed.parse_index(ENGINEERING, source, NOW)
+        self.assertEqual(len(items), 1)
+        item = items[0]
+        self.assertEqual(item['source'], 'Anthropic / Claude')
+        self.assertEqual(item['url'], 'https://www.anthropic.com/research/engineering-workflows')
+        self.assertEqual(item['summary'], 'Build reliable systems.')
+        self.assertEqual(item['topics'], ['build'])
+        self.assertEqual(item['published'], feed.timestamp('2026-11-04T00:00:00Z'))
+        iso = ENGINEERING.replace(b'<time>Nov 04, 2026</time>', b'<time datetime="2026-11-04T00:00:00Z">4 November</time>')
+        self.assertEqual(feed.parse_index(iso, source, NOW), items)
+        self.assertEqual(feed.parse_index(ENGINEERING + ENGINEERING, source, NOW), items)
+        for bad in [b'https://evil.example/research/test', b'javascript:alert(1)', b'/careers/test']:
+            self.assertEqual(feed.parse_index(ENGINEERING.replace(b'/research/engineering-workflows', bad), source, NOW), [])
+        self.assertEqual(feed.parse_index(ENGINEERING.replace(b'2026', b'2020'), source, NOW), [])
+        self.assertEqual(feed.parse_index(ENGINEERING.replace(b'Nov 04, 2026', b'unknown'), source, NOW), [])
+        for payload in [b'<html>Maintenance</html>', b'\x00<article/>', b'X' * (feed.MAX_BYTES + 1)]:
+            with self.assertRaises(ValueError): feed.parse_index(payload, source, NOW)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'cache.json'
+            value = {'anthropic': {'items': items, 'updated_at': NOW}}
+            feed.save_cache(value, path)
+            self.assertEqual(feed.load_cache(path)['anthropic']['items'], items)
+
+    def test_engineering_index_changes_preserve_previous_cache(self):
+        previous = {'anthropic': {'items': feed.parse_index(ENGINEERING, feed.SOURCES['anthropic'], NOW), 'updated_at': NOW - 300}}
+        def fetch(url, headers):
+            if 'developers.googleblog' in url: return GOOGLE_DEVELOPERS, {}
+            return (b'<html>Maintenance</html>' if 'anthropic' in url else b'<rss><channel/></rss>'), {}
+        value, errors = feed.refresh(previous, fetch, NOW)
+        self.assertEqual(value['anthropic'], previous['anthropic'])
+        self.assertEqual(set(errors), {'anthropic'})
+
+    def test_google_developer_index_uses_publisher_dates(self):
+        source = feed.SOURCES['google_developers']
+        item = feed.parse_index(GOOGLE_DEVELOPERS, source, NOW)[0]
+        self.assertEqual(item['published'], feed.timestamp('2026-11-03T00:00:00Z'))
+        self.assertEqual(item['url'], 'https://developers.googleblog.com/gemini-routing/')
+        self.assertIn('cost', item['topics'])
+        self.assertIn('routing', item['action'])
+        self.assertEqual(feed.parse_index(GOOGLE_DEVELOPERS.replace(b'NOV. 3, 2026', b'JAN. 3, 2020'), source, NOW), [])
+        with self.assertRaises(ValueError):
+            feed.parse_index(b'<html>Unavailable</html>', source, NOW)
+
     def test_html_xml_bad_dates_old_news_and_non_ai_are_not_live_learning(self):
         for payload in [b'<html>error page</html>', b'<!DOCTYPE x [<!ENTITY boom "x">]><rss/>', b'\x00<rss/>']:
             with self.assertRaises(ValueError):feed.parse_feed(payload,feed.SOURCES['huggingface'],NOW)
@@ -55,6 +120,8 @@ class LearningFeedTests(unittest.TestCase):
             if 'huggingface' in url:
                 self.assertEqual(headers['If-None-Match'],'"fixture"');return None,{}
             if 'cloudflare' in url:raise HTTPError(url,429,'limited',{},None)
+            if 'anthropic' in url:return ENGINEERING,{}
+            if 'developers.googleblog' in url:return GOOGLE_DEVELOPERS,{}
             return b'<rss><channel/></rss>',{'etag':'new'}
         value,errors=feed.refresh(previous,fetch,NOW)
         self.assertEqual(value['huggingface']['items'],[item])

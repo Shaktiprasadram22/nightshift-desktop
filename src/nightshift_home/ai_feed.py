@@ -14,6 +14,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from data import HOME
 from personal_store import private_write
+from learning_index import article_records
 
 CACHE = HOME / '.cache/nightshift-home/ai-learning.json'
 REFRESH_SECONDS = 300
@@ -25,6 +26,11 @@ SOURCES = {
     'cloudflare': {'name': 'Cloudflare', 'url': 'https://blog.cloudflare.com/tag/ai/rss/', 'host': 'blog.cloudflare.com'},
     'nvidia': {'name': 'NVIDIA', 'url': 'https://developer.nvidia.com/blog/feed/', 'host': 'developer.nvidia.com'},
     'google': {'name': 'Google Research', 'url': 'https://research.google/blog/rss/', 'host': 'research.google'},
+    'openai': {'name': 'OpenAI', 'url': 'https://openai.com/news/rss.xml', 'host': 'openai.com'},
+    'anthropic': {'name': 'Anthropic / Claude', 'url': 'https://www.anthropic.com/engineering', 'host': 'www.anthropic.com', 'format': 'engineering'},
+    'n8n': {'name': 'n8n', 'url': 'https://blog.n8n.io/rss/', 'host': 'blog.n8n.io'},
+    'google_ai': {'name': 'Google AI', 'url': 'https://blog.google/innovation-and-ai/technology/ai/rss/', 'host': 'blog.google'},
+    'google_developers': {'name': 'Google Developers', 'url': 'https://developers.googleblog.com/', 'host': 'developers.googleblog.com', 'format': 'google_developers'},
 }
 HOSTS = {value['host'] for value in SOURCES.values()} | {'docs.vllm.ai'}
 TOPICS = {
@@ -32,7 +38,7 @@ TOPICS = {
     'latency': r'latency|inference|throughput|speculative|batch|prefill|decod|serving|streaming|speed|accelerat|cach',
     'build': r'agent|retrieval|\brag\b|evaluat|fine.tun|reasoning|embed|tool.call|guardrail|prompt|deploy|cookbook|tutorial|training',
 }
-AI_CONTEXT = re.compile(r'\bai\b|\bllms?\b|language model|transformer|agent|inference|retrieval|\brag\b|generative|quantiz|fine.tun|chatbot', re.I)
+AI_CONTEXT = re.compile(r'\bai\b|\bllms?\b|language model|transformer|agent|inference|retrieval|\brag\b|generative|quantiz|fine.tun|chatbot|\bopenai\b|\bchatgpt\b|\bgpt\b|\bclaude\b|\bgemini\b', re.I)
 GUIDES = [
     {'title': 'Reuse repeated prompt prefixes', 'summary': 'Learn how prefix caching avoids recomputing shared prompts in vLLM.', 'url': 'https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/', 'source': 'vLLM', 'topics': ['cost', 'latency'], 'action': 'Test prefix caching on repeated chatbot prompts; compare cost and time to first token.'},
     {'title': 'Choose an inference optimization', 'summary': 'A practical reference for quantization, caching, and efficient model execution.', 'url': 'https://huggingface.co/docs/transformers/en/optimization_overview', 'source': 'Hugging Face', 'topics': ['cost', 'latency'], 'action': 'Benchmark one inference optimization against the same prompts; record latency, memory, and answer quality.'},
@@ -72,6 +78,14 @@ def topics_for(value):
     return [name for name, pattern in TOPICS.items() if re.search(pattern, value, re.I)]
 
 
+def source_topics(value, source):
+    # This index is already curated for engineering at an AI lab; its cards
+    # sometimes contain only a title, with no excerpt mentioning AI explicitly.
+    if source.get('format') == 'engineering':
+        return topics_for(value) or ['build']
+    return topics_for(value) if AI_CONTEXT.search(value) else []
+
+
 def suggested_action(title, summary, topics):
     value = (title + ' ' + summary).lower()
     if re.search(r'cach|prefix', value):
@@ -96,7 +110,10 @@ def timestamp(value):
         try:
             parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
         except (TypeError, ValueError, OverflowError):
-            return None
+            try:
+                parsed = datetime.strptime(value.strip().replace('.', ''), '%b %d, %Y')
+            except (AttributeError, TypeError, ValueError, OverflowError):
+                return None
     try:
         result = parsed.replace(tzinfo=parsed.tzinfo or timezone.utc).timestamp()
         return result if math.isfinite(result) else None
@@ -135,8 +152,8 @@ def parse_feed(payload, source, now=None):
             continue
         summary = clean(summary, 260)
         value = title + ' ' + summary
-        topics = topics_for(value)
-        if not topics or not AI_CONTEXT.search(value):
+        topics = source_topics(value, source)
+        if not topics:
             continue
         url = canonical_url(url)
         if url in seen:
@@ -148,9 +165,36 @@ def parse_feed(payload, source, now=None):
     return sorted(result, key=lambda item: item['published'], reverse=True)[:MAX_ITEMS]
 
 
+def parse_index(payload, source, now=None):
+    if len(payload) > MAX_BYTES or b'\x00' in payload:
+        raise ValueError('Unexpected publisher index format or size.')
+    now = time.time() if now is None else now
+    result, seen = [], set()
+    for record in article_records(payload, source['url'], source['format'])[:1200]:
+        url = record['url']
+        if not safe_url(url, source['host']):
+            continue
+        if source['format'] == 'engineering' and not urllib.parse.urlsplit(url).path.startswith(('/engineering/', '/research/')):
+            continue
+        title, summary = clean(record['title'], 220), clean(record['summary'], 260)
+        published = timestamp(clean(record['date'], 80))
+        if not title or published is None or not now - MAX_AGE_DAYS * 86400 <= published <= now + 86400:
+            continue
+        url = canonical_url(url)
+        if url in seen:
+            continue
+        seen.add(url)
+        topics = source_topics(title + ' ' + summary, source)
+        if not topics:
+            continue
+        result.append(dict(title=title, url=url, source=source['name'], summary=summary,
+            published=published, topics=topics, kind='article', action=suggested_action(title, summary, topics)))
+    return sorted(result, key=lambda item: item['published'], reverse=True)[:MAX_ITEMS]
+
+
 def read_url(url, headers=None):
     request = urllib.request.Request(url, headers={'User-Agent': 'Nightshift-Desktop/0.2',
-        'Accept': 'application/rss+xml, application/atom+xml, application/xml', **(headers or {})})
+        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/html', **(headers or {})})
     try:
         with urllib.request.urlopen(request, timeout=12) as response:
             if not safe_url(response.url, urllib.parse.urlsplit(url).hostname):
@@ -185,7 +229,7 @@ def load_cache(path=CACHE):
                 if type(published) not in (float, int) or not math.isfinite(published) or not 0 <= published <= time.time()+86400:
                     continue
                 title, summary = clean(item['title'], 220), clean(item.get('summary'), 260)
-                topics = topics_for(title + ' ' + summary)
+                topics = source_topics(title + ' ' + summary, source)
                 if not topics:
                     continue
                 items.append(dict(title=title, summary=summary, source=source['name'], url=canonical_url(item['url']),
@@ -212,7 +256,8 @@ def refresh(previous, fetch=read_url, now=None):
                     raise ValueError('An unchanged response needs a saved feed.')
                 value = {**old, 'updated_at': now}
             else:
-                value = {'items': parse_feed(payload, source, now), 'updated_at': now, **validators}
+                parse = parse_index if source.get('format') in ('engineering', 'google_developers') else parse_feed
+                value = {'items': parse(payload, source, now), 'updated_at': now, **validators}
             return key, value, None
         except urllib.error.HTTPError as exc:
             return key, None, 'Source rate limit reached; saved guides remain available.' if exc.code in (403, 429) else 'Source unavailable; saved guides remain available.'

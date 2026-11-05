@@ -56,10 +56,24 @@ Open YouTube Music in a browser that exposes MPRIS media controls. Start playbac
 
 ## AI Learning
 
-Enable the panel to check Hugging Face, Cloudflare AI, NVIDIA Developer, and Google Research engineering feeds every **5 minutes**. It selects recent AI articles with practical topics such as caching, inference, quantization, latency, agents, retrieval, and evaluation. Results are sorted by publication date and limited to the last 90 days. Cost, Latency, and Build filters help narrow the feed.
+Enable the panel to check these official sources every **5 minutes**:
+
+| Publisher | Source |
+| --- | --- |
+| OpenAI | [News RSS](https://openai.com/news/rss.xml) |
+| Anthropic / Claude | [Engineering index](https://www.anthropic.com/engineering) |
+| n8n | [Blog RSS](https://blog.n8n.io/rss/) |
+| Google AI | [AI blog RSS](https://blog.google/innovation-and-ai/technology/ai/rss/) |
+| Google Developers | [Developer blog index](https://developers.googleblog.com/) |
+| Google Research | [Research RSS](https://research.google/blog/rss/) |
+| Hugging Face | [Blog feed](https://huggingface.co/blog/feed.xml) |
+| Cloudflare | [AI blog RSS](https://blog.cloudflare.com/tag/ai/rss/) |
+| NVIDIA | [Developer blog feed](https://developer.nvidia.com/blog/feed/) |
+
+It selects recent AI articles with practical topics such as caching, inference, quantization, latency, agents, retrieval, and evaluation. Anthropic’s source is its official HTML engineering index; Google Developers uses the dated latest articles on its official home page because its RSS omits dates. Both are read directly, without an unofficial feed service. Anthropic engineering cards without a topic match appear under Build. Results are sorted by publication date and limited to the last 90 days; adding a source does not make its older articles appear newly published. Cost, Latency, and Build filters help narrow the feed.
 
 Descriptions are publisher excerpts. Suggested **Try** actions are small experiments inferred from the topic; measure their effect on your own workload. Reference documentation remains available with a **Guide** label. The footer reports refresh state; its tooltip lists each source’s last check or error. Failed sources keep their previous cache, while successful sources update independently. Conditional requests reduce repeated downloads when supported by the publisher.
 
 The search bar filters this resource collection locally. **Web** explicitly opens an AI-focused Google search in your browser. Search text is not sent to a model or stored in the feed cache. This feature needs no AI API key.
 
-**To-do** adds an actionable experiment and a source link. Find that link under **Open learning source** in the task’s actions menu. **Notes** appends the takeaway, suggested experiment, date/source, and URL to your current text, including unsaved typing. Existing task edits are retained. A duplicate click does not create another copy of the same resource.
+**To-do** adds an actionable experiment and a source link. Find that link under **Open learning source** in the task’s actions menu. **Notes** appends the takeaway, suggested experiment, date/source, and URL to your current text, including unsaved typing. Existing task edits are retained. Both buttons remain enabled after saving. A duplicate click reports “Already in” without creating another copy; after removing the resource from Notes or deleting its task, you can save it again.

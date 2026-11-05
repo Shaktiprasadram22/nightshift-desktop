@@ -59,6 +59,26 @@ assert todo.rows[original]['edit'].get_text()=='My unfinished task edit'
 assert todo.rows[original]['stack'].get_visible_child_name()=='edit'
 assert todo.entry.get_text()=='Unsubmitted new task'
 assert not home.save_learning(item,'todo')
+# Saving never locks either button, including after refresh/filter re-rendering.
+for destination, label in [('notes','Notes'),('todo','To-do')]:
+    button=panel.cards[0][destination]
+    assert button.get_sensitive() and button.get_label()==label
+    button.clicked()
+    assert panel.notice.startswith('Already in ')
+assert json.loads(notes.store.path.read_text())['text']==saved
+assert len(todo.store.items)==2
+panel.render()
+assert all(panel.cards[0][key].get_sensitive() for key in ('notes','todo'))
+# Removing an item allows it to be saved again in the same app session.
+notes.buffer.set_text('Keep this note after removing the learning entry.')
+panel.cards[0]['notes'].clicked()
+saved=json.loads(notes.store.path.read_text())['text']
+assert saved.startswith('Keep this note after removing the learning entry.') and item['url'] in saved
+assert panel.notice.startswith('Added to Notes')
+todo.store.remove(todo.store.items[-1]['id'])
+panel.cards[0]['todo'].clicked()
+assert len(todo.store.items)==2 and todo.store.items[-1]['source_url']==item['url']
+assert panel.notice.startswith('Added to To-do')
 # Failed append must not lose the user's current in-memory buffer.
 notes.buffer.set_text(saved+'\nMore unsaved typing')
 before=notes.buffer.get_text(notes.buffer.get_start_iter(),notes.buffer.get_end_iter(),True)
@@ -77,7 +97,7 @@ panel.web_button.clicked();assert opened[-1].startswith('https://www.google.com/
 google=home.build_app_icon('google');home.app_buttons['google'].clicked()
 assert opened[-1]=='https://www.google.com/'
 assert google.get_accessible() is not None
-panel.search.set_text('');panel.notice='';panel.saved.clear();panel.select('cost');settle()
+panel.search.set_text('');panel.notice='';panel.select('cost');settle()
 output=ROOT/'artifacts/learning-ui';output.mkdir(parents=True,exist_ok=True)
 for width in (624,320):
     window.set_size_request(width,320);window.resize(width,320);settle()
@@ -94,4 +114,4 @@ for width in (624,320):
     context.set_source_surface(layer,0,0);context.paint()
     surface.write_to_png(str(output/f'learning-{width}.png'))
 window.destroy();notes.destroy();todo.destroy();google.destroy();profile.cleanup()
-print('GTK checks passed: notes and pending task edits preserved, duplicate saves avoided, search/web/Google actions work, 624×320 and 320×320 fit.')
+print('GTK checks passed: reusable save buttons, duplicate prevention, re-save after deletion, notes and pending task edits preserved, search/web/Google actions work, 624×320 and 320×320 fit.')

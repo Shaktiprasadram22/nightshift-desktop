@@ -13,7 +13,7 @@ class AIPanel(Gtk.Box):
         self.home = home
         self.tab, self.data, self.errors = 'latest', {}, {}
         self.busy, self.selecting = False, False
-        self.saved, self.cards = set(), []
+        self.cards = []
         self.notice, self.notice_source = '', 0
         css(self, 'personal-widget', 'ai-widget')
         header = Gtk.Box(spacing=8)
@@ -86,15 +86,12 @@ class AIPanel(Gtk.Box):
         self.data, self.errors, self.busy = data, errors or {}, busy
         self.render()
 
-    def save(self, item, destination, button):
+    def save(self, item, destination):
         try:
             added = self.home.save_learning(item, destination)
         except (OSError, ValueError) as exc:
             self.notice = str(exc) if isinstance(exc, ValueError) else 'Could not save. Your existing text is safe; please retry.'
         else:
-            self.saved.add((item['url'], destination))
-            button.set_label('Added' if destination == 'todo' else 'Saved')
-            button.set_sensitive(False)
             name = 'To-do' if destination == 'todo' else 'Notes'
             self.notice = ('Added to ' if added else 'Already in ') + name + ' · source link included'
         self.update_status()
@@ -172,13 +169,11 @@ class AIPanel(Gtk.Box):
             row.pack_start(meta, True, True, 0)
             controls = {'open': link}
             for destination, label in [('todo', 'To-do'), ('notes', 'Notes')]:
-                saved = (item['url'], destination) in self.saved
-                action = css(Gtk.Button(label=('Added' if destination == 'todo' else 'Saved') if saved else label), 'learning-action')
+                action = css(Gtk.Button(label=label), 'learning-action')
                 action.learning_key = (item['url'], destination)
-                action.set_sensitive(not saved)
                 action.get_accessible().set_name(('Add learning task to To-do: ' if destination == 'todo' else 'Append learning to Notes: ') + item['title'])
                 action.set_tooltip_text(('Add task: ' + item['action']) if destination == 'todo' else 'Append the takeaway, suggested experiment, and source link to your existing notes')
-                action.connect('clicked', lambda button, entry=item, dest=destination: self.save(entry, dest, button))
+                action.connect('clicked', lambda _button, entry=item, dest=destination: self.save(entry, dest))
                 row.pack_start(action, False, False, 0)
                 controls[destination] = action
             card.pack_start(row, False, False, 0)

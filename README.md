@@ -65,9 +65,9 @@ Enable editor matching in RGB Studio to coordinate existing VS Code/Cursor profi
 
 ### AI Learning and Google search
 
-Enable **AI Learning** in Home settings for current practical resources from Hugging Face, Cloudflare, NVIDIA, and Google Research. The feed checks every five minutes, keeps publisher dates visible, and provides Cost, Latency, and Build filters. Reference guides are labeled **Guide**.
+Enable **AI Learning** in Home settings for current practical resources from OpenAI, Anthropic/Claude, n8n, Google AI, Google Developers, Google Research, Hugging Face, Cloudflare, and NVIDIA. It checks official publisher feeds and article indexes every five minutes, keeps publication dates visible, and provides Cost, Latency, and Build filters. Reference guides are labeled **Guide**.
 
-Type in the search bar to filter learning resources. **Web** opens a broader AI search in Google. Use **To-do** to save a suggested experiment with its source link, or **Notes** to append the takeaway, experiment, and link to your existing notes. Repeated saves of the same resource are deduplicated. A task’s actions menu includes **Open learning source**.
+Type in the search bar to filter learning resources. **Web** opens a broader AI search in Google. Use **To-do** to save a suggested experiment with its source link, or **Notes** to append the takeaway, experiment, and link to your existing notes. Save buttons stay usable: repeated saves show “Already in” without creating a duplicate, and removing an entry lets you save it again. A task’s actions menu includes **Open learning source**.
 
 The movable **Google** shortcut opens Google directly.
 

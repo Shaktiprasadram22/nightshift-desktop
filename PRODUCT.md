@@ -11,7 +11,7 @@ Nightshift is a personal, native GTK desktop dashboard and appearance toolkit fo
 
 ## AI Learning
 
-The learning widget helps the user find practical AI techniques to try, especially chatbot cost savings, latency, inference optimization, agents, and retrieval. It checks public engineering feeds from Hugging Face, Cloudflare, NVIDIA, and Google Research every five minutes, selects relevant recent articles, and shows publisher excerpts and dates. Reference guides have an explicit Guide label.
+The learning widget helps the user find practical AI techniques to try, especially chatbot cost savings, latency, inference optimization, agents, and retrieval. It checks official feeds and article indexes from OpenAI, Anthropic/Claude, n8n, Google AI, Google Developers, Google Research, Hugging Face, Cloudflare, and NVIDIA every five minutes. It selects relevant recent articles and shows publisher excerpts and dates. Reference guides have an explicit Guide label. Save buttons remain usable, report duplicates without adding another copy, and allow saving again after removal.
 
 The user can filter by Cost, Latency, or Build and search resources locally. The explicit Web button opens a broader AI query in Google. Suggested experiments are derived from a resource’s topic, not asserted performance guarantees or model-generated article summaries.
 
