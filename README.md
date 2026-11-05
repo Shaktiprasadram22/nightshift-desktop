@@ -18,9 +18,9 @@ Built on **Zorin OS 18.1 · GNOME 46 · X11**. Native GTK widgets, a static gene
 | Layouts | Move and resize widgets with pointer or keyboard; saved Coding, Focus, and Chill layouts |
 | Notes & tasks | Local autosaved notes, to-do items, completion and undo |
 | System monitor | CPU, RAM, disk, and network activity with bounded sampling |
-| AI pulse | Hugging Face posts, recent AI repositories, and a curated learning tab |
+| AI Learning | Fresh engineering guides, cost/latency/build filters, search, and one-click saves to Notes or To-do |
 | Site insights | Optional Cloudflare host analytics and separate HTTPS health checks for up to four sites |
-| Shortcuts | Gmail, Google Photos, GitHub activity, local Codex sessions, Handy, and RGB Studio |
+| Shortcuts | Google search, Gmail, Google Photos, GitHub activity, local Codex sessions, Handy, and RGB Studio |
 | Music | YouTube Music shortcut, last played track, browser media controls, and seeking when supported |
 | Productivity | Project/app/session launcher, Git status, optional named workspace shortcuts |
 | Terminal | Coordinated GNOME Terminal colors, a small startup card, and a launcher that avoids stale D-Bus routing |
@@ -63,9 +63,17 @@ npm ci --ignore-scripts --prefix ~/.local/share/nightshift-home
 
 Enable editor matching in RGB Studio to coordinate existing VS Code/Cursor profiles. Only appearance keys are merged; JSONC comments and unrelated settings are preserved.
 
+### AI Learning and Google search
+
+Enable **AI Learning** in Home settings for current practical resources from Hugging Face, Cloudflare, NVIDIA, and Google Research. The feed checks every five minutes, keeps publisher dates visible, and provides Cost, Latency, and Build filters. Reference guides are labeled **Guide**.
+
+Type in the search bar to filter learning resources. **Web** opens a broader AI search in Google. Use **To-do** to save a suggested experiment with its source link, or **Notes** to append the takeaway, experiment, and link to your existing notes. Repeated saves of the same resource are deduplicated. A task’s actions menu includes **Open learning source**.
+
+The movable **Google** shortcut opens Google directly.
+
 ### Connect your own services
 
-No accounts are preconfigured. Cloudflare, Gmail, Photos, GitHub, AI pulse, Handy, and Codex panels start disabled. Enable the ones you use in Home settings.
+No accounts are preconfigured. Cloudflare, Gmail, Photos, GitHub, AI Learning, Handy, and Codex panels start disabled. Enable the ones you use in Home settings.
 
 Read [integration setup](docs/INTEGRATIONS.md) for Cloudflare OAuth and host configuration, Google accounts, selected Google Photos, GitHub CLI authentication, browser media controls, and local session shortcuts. You do not need any of these services to use the clock, theme, notes, tasks, or system monitor.
 

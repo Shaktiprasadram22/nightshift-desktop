@@ -23,7 +23,7 @@ DEFAULTS = {
     'reduced_motion': False, 'project_editor': 'code',
     'show_cloudflare': False, 'cloudflare_placement': 'right',
     'show_notes': True, 'show_todo': True, 'show_ai_feed': False, 'show_handy': False,
-    'show_theme': True, 'show_system': True, 'show_music': True,
+    'show_theme': True, 'show_system': True, 'show_music': True, 'show_google': True,
 }
 
 def write_json(path, value):

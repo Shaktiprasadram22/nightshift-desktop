@@ -44,7 +44,7 @@ def snapshot(home):
 
 def built_in(name, current, screen):
     value = validate(current)
-    groups = {'Coding': {'clock','notes','todo','system','cloudflare','icon-handy','icon-theme','icon-github','icon-codex'},
+    groups = {'Coding': {'clock','notes','todo','system','cloudflare','icon-google','icon-handy','icon-theme','icon-github','icon-codex'},
               'Focus': {'clock','notes','todo'}, 'Chill': {'clock','music','icon-photos','icon-theme','icon-handy'}}
     visible = groups[name] | {'shortcuts'}
     value['visibility'] = {key: False for key in KEYS}

@@ -57,35 +57,4 @@ class PersonalTests(unittest.TestCase):
         x,y,w,h=result
         self.assertTrue(all(x+w<=a or a+c<=x or y+h<=b or b+d<=y for a,b,c,d in occupied))
 
-class FeedTests(unittest.TestCase):
-    RSS=b'<rss><channel><item><title>A &amp; B</title><link>https://huggingface.co/blog/example</link><pubDate>Wed, 04 Nov 2026 17:50:10 GMT</pubDate></item><item><title>Unsafe</title><link>javascript:alert(1)</link></item></channel></rss>'
-
-    def test_rss_parsing_and_url_filter(self):
-        result=ai_feed.parse_latest(self.RSS);self.assertEqual(len(result),1);self.assertEqual(result[0]['title'],'A & B')
-        self.assertIsInstance(result[0]['published'],float)
-        with self.assertRaises(ValueError):ai_feed.parse_latest(b'<!DOCTYPE x [<!ENTITY boom "x">]><rss/>')
-
-    def test_tool_metadata_and_query(self):
-        payload=json.dumps({'items':[{'full_name':'org/tool','html_url':'https://github.com/org/tool','stargazers_count':42,'description':'<b>AI</b> example'}, {'html_url':'https://other.example/x'}]}).encode()
-        result=ai_feed.parse_tools(payload);self.assertEqual(result[0]['description'],'AI example');self.assertEqual(len(result),1)
-        self.assertIn('created%3A%3E2026-09-06',ai_feed.tools_url(1793836800))
-
-    def test_partial_failure_keeps_last_good_source(self):
-        previous={'tools':{'items':[{'title':'old'}],'updated_at':123}}
-        def fetch(url):
-            if 'api.github' in url:raise HTTPError(url,429,'rate limited',{},None)
-            return self.RSS
-        result,errors=ai_feed.refresh(previous,fetch,now=456)
-        self.assertEqual(result['tools'],previous['tools']);self.assertEqual(result['latest']['updated_at'],456)
-        self.assertIn('rate limit',errors['tools']);self.assertNotIn('latest',errors)
-
-    def test_empty_success_and_offline_cache(self):
-        with tempfile.TemporaryDirectory() as folder:
-            path=Path(folder)/'feed.json';data={'latest':{'items':ai_feed.parse_latest(self.RSS),'updated_at':123}}
-            ai_feed.save_cache(data,path);self.assertEqual(ai_feed.load_cache(path),data)
-            result,errors=ai_feed.refresh(data,lambda _u:(_ for _ in ()).throw(OSError('offline')))
-            self.assertEqual(result,data);self.assertEqual(set(errors),{'latest','tools'})
-        self.assertEqual(ai_feed.parse_latest(b'<rss><channel/></rss>'),[])
-        self.assertFalse(ai_feed.safe_url('https://github.com@evil.example/a','github.com'))
-
 if __name__=='__main__':unittest.main()

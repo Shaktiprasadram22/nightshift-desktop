@@ -149,6 +149,14 @@ window.nightshift-launcher { background-color: transparent; }
 .ai-widget .personal-meta, .ai-widget .personal-status { font-size: 12px; color: #c3d1e3; }
 .ai-widget .ai-description { font-size: 12px; }
 .ai-widget .ai-title { font-size: 14px; }
+.ai-widget button.ai-article { padding: 0; min-height: 0; border: none; box-shadow: none; }
+.ai-widget button.ai-tab { padding: 2px 8px; min-height: 24px; }
+.ai-widget .learning-card { padding: 2px 0 9px; border-bottom: 1px solid rgba(155,185,220,.12); }
+.ai-widget button.learning-action { min-height: 24px; min-width: 30px; padding: 3px 7px; border: 1px solid rgba(155,185,220,.24); border-radius: 7px; background: transparent; color: #c9e7f0; font-size: 12px; }
+.ai-widget button.learning-action:hover { border-color: #8ee7f6; background: rgba(161,194,225,.07); }
+.ai-widget button.learning-action:disabled { color: #9eb5c8; border-color: rgba(155,185,220,.10); }
+.ai-widget button.learning-action:focus, .ai-widget button.ai-article:focus { outline: 2px solid #8ee7f6; outline-offset: -2px; }
+.ai-widget entry { min-height: 24px; font-size: 13px; }
 .personal-widget scrollbar { background: transparent; border: none; }
 .personal-widget scrollbar slider { min-width: 3px; min-height: 24px; background: rgba(171,197,220,.3); border: none; }
 

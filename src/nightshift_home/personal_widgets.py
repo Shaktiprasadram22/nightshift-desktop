@@ -43,7 +43,25 @@ class NotesWidget(Gtk.Box):
         self.status=text(self.store.error or 'Saved on this device','personal-status')
         self.status.set_line_wrap(True);self.status.set_max_width_chars(1);self.status.get_accessible().set_role(Atk.Role.STATUSBAR)
         self.pack_start(self.status,False,False,0)
-        self.buffer.connect('changed',self.changed);self.hint.set_visible(not self.store.text)
+        self.changed_handler=self.buffer.connect('changed',self.changed);self.hint.set_visible(not self.store.text)
+
+    def append_learning(self,item):
+        from learning_actions import append_note
+        current=self.buffer.get_text(self.buffer.get_start_iter(),self.buffer.get_end_iter(),True)
+        value,added=append_note(current,item)
+        if not added:return False
+        # Save the current editor buffer, including unsaved typing, in one write.
+        # A failed save leaves both the buffer and its pending save untouched.
+        self.store.save(value)
+        if self.pending:GLib.source_remove(self.pending);self.pending=0
+        cursor=self.buffer.get_iter_at_mark(self.buffer.get_insert()).get_offset()
+        self.buffer.handler_block(self.changed_handler)
+        try:
+            self.buffer.set_text(value)
+            self.buffer.place_cursor(self.buffer.get_iter_at_offset(cursor))
+        finally:self.buffer.handler_unblock(self.changed_handler)
+        self.dirty=False;self.hint.hide();self.status.set_text('Learning saved on this device')
+        return True
 
     def changed(self,*_):
         self.dirty=True;self.hint.set_visible(self.buffer.get_char_count()==0);self.status.set_text('Saving…')
@@ -92,6 +110,19 @@ class TodoWidget(Gtk.Box):
             self.status.set_text(str(exc) if isinstance(exc,ValueError) else 'Could not save that change. Your existing tasks are safe.');return False
         self.status.set_text('Saved on this device');self.render();return True
 
+    def add_learning(self,item):
+        from learning_actions import task_text
+        before={entry['id'] for entry in self.store.items}
+        identifier=self.store.add(task_text(item),source_url=item['url'])
+        if identifier in before:return False
+        edits={key:row['edit'].get_text() for key,row in self.rows.items() if row['stack'].get_visible_child_name()=='edit'}
+        self.render()
+        for key,value in edits.items():
+            if key in self.rows:
+                self.rows[key]['edit'].set_text(value);self.rows[key]['stack'].set_visible_child_name('edit')
+        self.status.set_text('Learning task saved · source in its actions menu')
+        return True
+
     def add_task(self):
         value=self.entry.get_text().strip()
         if not value:return
@@ -138,6 +169,10 @@ class TodoWidget(Gtk.Box):
         edit.connect('activate',lambda *_:self.act(self.store.update,identifier,text=edit.get_text()))
         edit.connect('key-press-event',lambda _w,e:(stack.set_visible_child_name('view'),True)[1] if e.keyval==Gdk.KEY_Escape else False)
         menu=Gtk.Menu();edit_item=Gtk.MenuItem(label='Edit task');edit_item.connect('activate',start_edit);menu.append(edit_item)
+        from ai_feed import safe_url
+        if safe_url(item.get('source_url')):
+            source=Gtk.MenuItem(label='Open learning source')
+            source.connect('activate',lambda *_:self.home.open_url(item['source_url']));menu.append(source)
         delete=Gtk.MenuItem(label='Remove task');delete.connect('activate',lambda *_:self.act(self.store.remove,identifier));menu.append(delete);menu.show_all()
         actions=css(Gtk.MenuButton(),'icon-button');actions.add(Gtk.Image.new_from_icon_name('view-more-symbolic',Gtk.IconSize.BUTTON));actions.set_popup(menu)
         actions.get_accessible().set_name('Actions for '+item['text']);actions.set_valign(Gtk.Align.START);row.pack_end(actions,False,False,0)

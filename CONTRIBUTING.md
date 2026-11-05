@@ -20,6 +20,7 @@ Start with a focused issue or pull request describing the problem, affected desk
 ```sh
 npm ci --ignore-scripts --prefix src/nightshift_home
 /usr/bin/python3 tools/test.py
+dbus-run-session -- /usr/bin/python3 tools/verify_learning_ui.py
 dbus-run-session -- /usr/bin/python3 tools/render_demo.py
 ```
 

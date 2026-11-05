@@ -40,7 +40,7 @@ from music_panel import MusicPanel
 import ai_feed
 import theme_palette
 
-URLS = {'gmail': 'https://mail.google.com/', 'photos': 'https://photos.google.com/'}
+URLS = {'gmail': 'https://mail.google.com/', 'photos': 'https://photos.google.com/', 'google': 'https://www.google.com/'}
 
 def style(widget, *classes):
     for name in classes: widget.get_style_context().add_class(name)
@@ -204,7 +204,7 @@ class Home(Gtk.Application):
         builders=[('clock',self.build_clock),('gmail',self.build_gmail),
                 ('photos',self.build_photos),('github',self.build_github),
                 ('codex',self.build_codex)]
-        builders += [('icon-'+name,lambda n=name:self.build_app_icon(n)) for name in ('gmail','photos','github','codex','handy','theme')]
+        builders += [('icon-'+name,lambda n=name:self.build_app_icon(n)) for name in ('gmail','photos','github','codex','handy','theme','google')]
         builders += [('shortcuts',self.build_shortcuts),('cloudflare',self.build_cloudflare)]
         builders += [('notes',self.build_notes),('todo',self.build_todo),('ai-feed',self.build_ai),('system',self.build_system),('music',self.build_music)]
         for name,builder in builders:
@@ -261,7 +261,7 @@ class Home(Gtk.Application):
         return self.clock_button
 
     def build_app_icon(self,name):
-        title={'gmail':'Gmail','photos':'Photos','github':'GitHub','codex':'Codex','handy':'Handy','theme':'Theme'}[name]
+        title={'gmail':'Gmail','photos':'Photos','github':'GitHub','codex':'Codex','handy':'Handy','theme':'Theme','google':'Google'}[name]
         column=box(spacing=9);column.set_valign(Gtk.Align.CENTER)
         from shortcut_glyphs import ShortcutGlyph
         image=ShortcutGlyph(name,30)
@@ -360,18 +360,23 @@ class Home(Gtk.Application):
     def ai_tick(self):
         self.refresh_ai();return True
 
+    def save_learning(self,item,destination):
+        if destination=='notes':return self.notes_widget.append_learning(item)
+        if destination=='todo':return self.todo_widget.add_learning(item)
+        raise ValueError('Choose Notes or To-do.')
+
     def refresh_ai(self,force=False):
         if self.ai_busy or not self.config['show_ai_feed']:return
         now=time.time()
         if not force and now-self.ai_attempt<ai_feed.REFRESH_SECONDS:return
-        if not force and all(now-self.ai_data.get(key,{}).get('updated_at',0)<ai_feed.REFRESH_SECONDS for key in ('latest','tools')):return
+        if not force and all(now-self.ai_data.get(key,{}).get('updated_at',0)<ai_feed.REFRESH_SECONDS for key in ai_feed.SOURCES):return
         self.ai_attempt=now;self.ai_busy=True;self.ai_panel.update(self.ai_data,self.ai_errors,True)
         previous=self.ai_data
         def work():
             value,errors=ai_feed.refresh(previous)
             try:ai_feed.save_cache(value)
             except OSError:
-                for key in ('latest','tools'):errors.setdefault(key,'Could not save this update for offline use.')
+                for key in ai_feed.SOURCES:errors.setdefault(key,'Could not save this update for offline use.')
             GLib.idle_add(self.finish_ai,value,errors)
         threading.Thread(target=work,daemon=True,name='nightshift-ai-feed').start()
 
@@ -822,8 +827,9 @@ class Home(Gtk.Application):
         additions['system']=(ax,ay+ah+32,max(560,aw),230)
         sx,sy,sw,sh=self.layout.resolve('system',additions['system'],(w,h))
         additions['music']=(sx,sy+sh+24,420,210)
-        gx,gy,_,_=resolved['icon-gmail'];additions['icon-handy']=(gx-94,gy,84,106)
-        additions['icon-theme']=(gx-188,gy,84,106)
+        gx,gy,_,_=resolved['icon-gmail'];additions['icon-google']=(gx-94,gy,84,106)
+        additions['icon-handy']=(gx-188,gy,84,106)
+        additions['icon-theme']=(gx-282,gy,84,106)
         for name,preferred in additions.items():
             if name in self.layout.items:
                 resolved[name]=self.layout.resolve(name,preferred,(w,h));occupied.append(resolved[name])
@@ -1093,7 +1099,7 @@ class Home(Gtk.Application):
         profiles.connect('clicked',lambda *_:self.show_profiles());content.pack_start(profiles,False,False,0)
         project=Gtk.Button(label='Project status · Git, editor and terminal')
         project.connect('clicked',lambda *_:self.show_project());content.pack_start(project,False,False,0)
-        for title,key in [('Clock and date','show_clock'),('Notes','show_notes'),('To-do list','show_todo'),('AI pulse','show_ai_feed'),('System monitor · CPU, RAM, storage','show_system'),('YouTube Music player','show_music'),('Handy shortcut','show_handy'),('RGB Studio shortcut','show_theme'),('App icons','show_shortcuts'),('Cloudflare site insights','show_cloudflare'),('GitHub activity','show_github'),('Gmail inbox','show_gmail'),('Google Photos frame','show_photos'),('Recent Codex sessions','show_codex'),('Show Codex session names','show_session_titles'),('Reduce motion','reduced_motion'),('Start when I log in','autostart')]:
+        for title,key in [('Clock and date','show_clock'),('Notes','show_notes'),('To-do list','show_todo'),('AI Learning','show_ai_feed'),('System monitor · CPU, RAM, storage','show_system'),('YouTube Music player','show_music'),('Google shortcut','show_google'),('Handy shortcut','show_handy'),('RGB Studio shortcut','show_theme'),('App icons','show_shortcuts'),('Cloudflare site insights','show_cloudflare'),('GitHub activity','show_github'),('Gmail inbox','show_gmail'),('Google Photos frame','show_photos'),('Recent Codex sessions','show_codex'),('Show Codex session names','show_session_titles'),('Reduce motion','reduced_motion'),('Start when I log in','autostart')]:
             row=box(False,12);row.pack_start(label(title),True,True,0)
             toggle=Gtk.Switch();toggle.set_active(self.config[key]);accessible(toggle,title)
             toggle.connect('notify::active',lambda w,_p,k=key:self.set_option(k,w.get_active()))

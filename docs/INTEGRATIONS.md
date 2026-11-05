@@ -54,6 +54,12 @@ Handy uses its installed desktop entry/executable. Nightshift does not install s
 
 Open YouTube Music in a browser that exposes MPRIS media controls. Start playback, then use the widget’s player chooser if automatic selection is ambiguous. Previous/next and seek are enabled only when the selected player reports those capabilities. The saved last track is a local convenience, not a streaming API or a replacement for the browser.
 
-## AI pulse
+## AI Learning
 
-Enable the panel to fetch public Hugging Face blog posts and recent AI repositories from GitHub every **15 minutes**. The Tools tab is a recent-repository query sorted by stars, not GitHub’s official Trending page. Learn is a curated list rather than a live feed. Rate limits/offline errors show the saved data and its timestamp.
+Enable the panel to check Hugging Face, Cloudflare AI, NVIDIA Developer, and Google Research engineering feeds every **5 minutes**. It selects recent AI articles with practical topics such as caching, inference, quantization, latency, agents, retrieval, and evaluation. Results are sorted by publication date and limited to the last 90 days. Cost, Latency, and Build filters help narrow the feed.
+
+Descriptions are publisher excerpts. Suggested **Try** actions are small experiments inferred from the topic; measure their effect on your own workload. Reference documentation remains available with a **Guide** label. The footer reports refresh state; its tooltip lists each source’s last check or error. Failed sources keep their previous cache, while successful sources update independently. Conditional requests reduce repeated downloads when supported by the publisher.
+
+The search bar filters this resource collection locally. **Web** explicitly opens an AI-focused Google search in your browser. Search text is not sent to a model or stored in the feed cache. This feature needs no AI API key.
+
+**To-do** adds an actionable experiment and a source link. Find that link under **Open learning source** in the task’s actions menu. **Notes** appends the takeaway, suggested experiment, date/source, and URL to your current text, including unsaved typing. Existing task edits are retained. A duplicate click does not create another copy of the same resource.

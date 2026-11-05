@@ -41,7 +41,10 @@ class ShortcutGlyph(Gtk.DrawingArea):
                 cr.arc(cx,cy,r,a,a+math.pi/2)
             cr.close_path();cr.stroke()
 
-        if self.name == 'gmail':
+        if self.name == 'google':
+            cr.arc(12,12,8,math.pi/4,2*math.pi-math.pi/4);cr.stroke()
+            cr.move_to(12,12);cr.line_to(20,12);cr.curve_to(20,14.5,19,16.5,17.65,17.65);cr.stroke()
+        elif self.name == 'gmail':
             rounded(3.5,5.5,17,13,2)
             line((4.5,7),(12,13),(19.5,7))
             line((4.5,17),(9.5,13));line((19.5,17),(14.5,13))

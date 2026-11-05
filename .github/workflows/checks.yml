@@ -20,3 +20,5 @@ jobs:
         run: /usr/bin/python3 tools/test.py
       - name: Render GTK demo and check allocations
         run: xvfb-run -a -s '-screen 0 1920x1080x24' dbus-run-session -- /usr/bin/python3 tools/render_demo.py --output /tmp/nightshift-demo.png
+      - name: Verify learning search and document save interactions
+        run: xvfb-run -a -s '-screen 0 1920x1080x24' dbus-run-session -- /usr/bin/python3 tools/verify_learning_ui.py

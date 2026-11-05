@@ -68,7 +68,7 @@ home.clock_zone.set_text('A little space to focus')
 tile('notes', home.build_notes(), (140, 130, 360, 260))
 tile('todo', home.build_todo(), (142, 424, 360, 340))
 ai = tile('ai-feed', home.build_ai(), (664, 113, 624, 320))
-ai.select('learn')
+ai.select('cost')
 system = tile('system', home.build_system(), (664, 465, 624, 230))
 system.set_geometry(624, 230)
 system.update(Snapshot(5.9, Usage(16*2**30, 6*2**30, 10*2**30), Usage(512*2**30, 184*2**30, 328*2**30), {}))
@@ -85,7 +85,7 @@ music = tile('music', home.build_music(), (731, 734, 502, 195))
 music.title.set_text('Midnight coding session')
 music.artist.set_text('Your soundtrack, your space')
 music.status.set_text('Demo · connect your browser to play')
-for name, x, y in [('gmail',1517,808),('codex',1604,808),('photos',1687,808),('github',1771,808),('theme',145,799),('handy',255,799)]:
+for name, x, y in [('google',1423,808),('gmail',1517,808),('codex',1604,808),('photos',1687,808),('github',1771,808),('theme',145,799),('handy',255,799)]:
     tile('icon-'+name, home.build_app_icon(name), (x,y,84,106))
 tile('shortcuts', home.build_shortcuts(), (1532,927,314,73))
 

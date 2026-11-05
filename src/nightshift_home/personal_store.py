@@ -66,12 +66,18 @@ class TodoStore:
         private_write(self.path,{'items':items,'undo_items':undo,'updated_at':time.time()})
         self.items=items;self.undo_items=undo
 
-    def add(self,text):
+    def add(self,text,*,source_url=None):
         text=text.strip()
         if not text:return None
+        if source_url is not None:
+            from ai_feed import canonical_url
+            source_url=canonical_url(source_url)
+            previous=next((item for item in self.items if item.get('source_url')==source_url),None)
+            if previous:return previous['id']
         if len(self.items)>=200:raise ValueError('This list has 200 tasks. Remove completed tasks before adding more.')
         if len(text)>500:raise ValueError('Keep each task under 500 characters.')
         item={'id':uuid.uuid4().hex,'text':text,'done':False,'created_at':time.time()}
+        if source_url is not None:item['source_url']=source_url
         self.commit(self.items+[item]);return item['id']
 
     def update(self,identifier,**changes):
